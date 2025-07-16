@@ -1,0 +1,185 @@
+/* assets/style_login.css */
+
+/* Reset dan Base Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+    background-color: #f5f5f5;
+    color: #333;
+    line-height: 1.6;
+}
+
+/* Container Utama */
+.container {
+    display: flex;
+    min-height: 100vh;
+    background-color: #fff;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+/* Bagian Kiri (Gambar) */
+.left {
+    flex: 1;
+    overflow: hidden;
+    position: relative;
+}
+
+.left img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+/* Overlay untuk gambar */
+.left::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to bottom, rgba(110, 66, 34, 0.3), rgba(73, 44, 23, 0.7));
+}
+
+/* Bagian Kanan (Form) */
+.right {
+    flex: 1;
+    padding: 3rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    background-color: #fff;
+}
+
+.right h2 {
+    font-size: 1.8rem;
+    color: #6e4222;
+    margin-bottom: 1rem;
+    text-align: center;
+    font-weight: 600;
+}
+
+.form-title {
+    text-align: center;
+    color: #8a5a44;
+    margin-bottom: 2rem;
+    font-size: 1.2rem;
+    font-weight: 500;
+}
+
+/* Form Styles */
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+input {
+    padding: 0.8rem 1rem;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+}
+
+input:focus {
+    outline: none;
+    border-color: #8a5a44;
+    box-shadow: 0 0 0 2px rgba(138, 90, 68, 0.2);
+}
+
+/* Button Styles */
+.btn {
+    padding: 0.8rem;
+    border: none;
+    border-radius: 4px;
+    font-size: 1rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-align: center;
+    text-decoration: none;
+}
+
+.btn.primary {
+    background-color: #8a5a44;
+    color: white;
+}
+
+.btn.primary:hover {
+    background-color: #6e4222;
+}
+
+.btn.secondary {
+    background-color: #f0e6e0;
+    color: #6e4222;
+    border: 1px solid #d4c4b8;
+}
+
+.btn.secondary:hover {
+    background-color: #e0d2c8;
+}
+
+/* Bottom Links */
+.bottom-links {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0.5rem;
+    margin-top: 1rem;
+    font-size: 0.9rem;
+}
+
+.bottom-links a {
+    color: #8a5a44;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.bottom-links a:hover {
+    color: #6e4222;
+    text-decoration: underline;
+}
+
+.bottom-links span {
+    color: #ccc;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .container {
+        flex-direction: column;
+    }
+
+    .left {
+        height: 200px;
+    }
+
+    .right {
+        padding: 2rem;
+    }
+}
+
+/* Animasi */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.right {
+    animation: fadeIn 0.5s ease-out;
+}
