@@ -1,118 +1,972 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Tenun Ikat Sasak – Warisan Budaya</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet" />
-  <script src="https://cdn.tailwindcss.com"></script>
-  <style>
-    body { font-family: 'Poppins', sans-serif; }
-    .card:hover { transform: translateY(-4px); box-shadow: 0 10px 20px rgba(0,0,0,0.1); }
-    .card p { text-align: justify; }
-  </style>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Katalog UMKM – Sasak Wisata</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet" />
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+<style>
+  /* Tambahkan ini di bagian style */
+  #checkoutModal {
+    align-items: flex-start; /* Ubah dari center ke flex-start */
+    padding-top: 20px;
+    padding-bottom: 20px;
+    overflow-y: auto; /* Tambahkan scroll jika konten terlalu panjang */
+  }
+  
+  #checkoutModal > div {
+    max-height: 90vh; /* Batasi tinggi maksimal modal */
+    overflow-y: auto; /* Tambahkan scroll internal jika diperlukan */
+    width: 95%; /* Lebar lebih responsif */
+    max-width: 500px; /* Lebar maksimal lebih kecil */
+    margin-top: 20px;
+    margin-bottom: 20px;
+  }
+  
+  /* Pastikan form tetap terlihat */
+  #checkoutForm {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+</style>
 </head>
-<body class="bg-amber-50 text-amber-900">
-  <!-- Header -->
-  <header class="bg-amber-900 text-white p-4 shadow-md flex items-center justify-between relative">
-    <a href="SASAK.html" class="text-lg font-bold flex items-center gap-2 hover:text-amber-200 absolute left-4 top-1/2 -translate-y-1/2">
-      <span class="text-2xl leading-none">←</span>
-      <span class="hidden sm:inline">Kembali</span>
-    </a>
-    <h1 class="font-bold text-xl text-center w-full">Tenun Ikat Sasak</h1>
-  </header>
+<body class="bg-amber-100 text-gray-800">
 
-  <!-- Intro -->
-  <section class="max-w-4xl mx-auto px-4 py-8 text-center">
-    <h2 class="text-2xl font-bold mb-2">Kain Tradisional <span class="text-amber-700">Suku Sasak</span></h2>
-    <p class="text-sm text-gray-700">Tenun ikat Sasak mencerminkan kearifan lokal, nilai spiritual, dan filosofi hidup masyarakat Lombok yang diwariskan turun-temurun.</p>
-  </section>
+<!-- ===== NAVBAR ===== -->
+<nav class="bg-amber-900 text-white p-4 flex flex-wrap gap-4 items-center sticky top-0 z-10">
+  <span class="font-semibold text-lg tracking-wide">BALEQARA</span>
 
-  <!-- Grid Motif Tenun -->
-  <section class="max-w-6xl mx-auto grid sm:grid-cols-2 lg:grid-cols-3 gap-6 px-4 pb-24">
-    <!-- Motif Subhanale -->
-    <article class="card bg-white rounded-lg overflow-hidden shadow transition-transform">
-      <img src="https://pbs.twimg.com/media/CVHZC-zU4AE5WbD.jpg" alt="Motif Subhanale" class="h-48 w-full object-cover">
-      <div class="p-4 space-y-2">
-        <h3 class="font-semibold text-lg">Motif Subhanale</h3>
-        <p class="text-sm">Merupakan bentuk mengagungkan asma Allah. Dahulu ada seorang penenun yang ketika merasa puas melihat hasil karya menenunnya, dia mengucapkan "Subhanallah" (artinya Maha Suci Allah), sehingga melahirkan nama Subhanale ini.</p>
-        <details class="text-sm">
-          <summary class="cursor-pointer text-amber-700 font-medium">Lihat lebih banyak</summary>
-          <p class="mt-2">Awalnya berbentuk geometris segi enam yang didalamnya ada dekorasi beragam bunga, seperti bunga tanjung, remawa atau kenanga. Dengan pemilihan warna dasar kain hitam atau merah dengan motif bergaris garis geometris berwarna kuning. Kain tenun motif ini biasa digunakan untuk pakaian pria dan wanita dalam pesta atau upacara adat.</p>
-        </details>
+  <!-- Search -->
+  <input id="search" type="text" placeholder="Cari Bus/Hotel..." class="flex-1 min-w-[180px] p-2 rounded text-gray-800" />
+
+  <!-- Dropdown Destinasi -->
+  <select id="destSelect" class="p-2 rounded text-gray-800">
+    <option value="all">Lokasi Destinasi Anda</option>
+    <option>Pantai Seger</option>
+    <option>Desa Adat Sade</option>
+    <option>Gunung Rinjani</option>
+    <option>Pantai Kuta Mandalika</option>
+    <option>Bukit Merese</option>
+    <option>Air Terjun Tiu Kelep</option>
+    <option>Pantai Pink</option>
+    <option>Desa Ende</option>
+    <option>Masjid Kuno Bayan Beleq</option>
+    <option>Makam Keramat</option>
+    <option>Wisata Sesaot</option>
+    <option>Pura Batu Bolong</option>
+    <option>Pasar Seni Sukarara</option>
+    <option>Dusun Beleq, Sembalun</option>
+    <option>Desa Tete Batu</option>
+    <option>Pura Lingsar</option>
+    <option>Benteng Selong</option>
+    <option>Desa Lingsar</option>
+    <option>Desa Bilebante</option>
+    <option>Kampung Tenun Pringgasela</option>
+    <option>Gili Nanggu &amp; Gili Sudak</option>
+  </select>
+</nav>
+
+<!-- ===== TEKS PROMOSI ===== -->
+<section class="text-center py-6 px-4 bg-amber-100">
+  <h1 class="text-2xl font-bold text-amber-900 mb-2">Yuk Jelajahi Lombok dengan Mudah & Seru!</h1>
+  <p class="text-gray-700">Nikmati pengalaman menjelajah Lombok dengan lebih mudah dan menyenangkan.
+Mulai dari layanan bus dan travel yang siap menjemputmu ke destinasi favorit, hingga hotel dan penginapan terbaik yang bisa kamu pilih sesuai kebutuhan dan kenyamanan.</p>
+</section>
+
+<!-- ===== KATEGORI ===== -->
+<section class="max-w-7xl mx-auto px-4 py-4">
+  <div id="catBar" class="flex flex-wrap gap-3">
+    <button data-filter="bus" class="filter-btn px-3 py-1 rounded-full">BUS TRAVEL</button>
+    <button data-filter="hotel"   class="filter-btn px-3 py-1 rounded-full">HOTEL</button>
+  </div>
+</section>
+
+<!-- ===== GRID PRODUK ===== -->
+<main id="grid" class="max-w-7xl mx-auto grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4 px-4 pb-8">
+
+<!-- ---------- KELOMPOK BUS TRAVEL ---------- -->  
+<!-- ---------- bus 1 ---------- -->
+<article class="product-card bg-white rounded-lg overflow-hidden shadow-sm"
+  data-name="Travel Bus Kuta – Sade – Bandara" data-price="75000" data-cat="bus"
+  data-destin="Pantai Kuta Mandalika"
+  data-lat="-8.8882" data-lng="116.2779" data-gmaps="Pantai Kuta Mandalika, Lombok">
+  <div class="relative">
+    <img src="https://cdn-2.tstatic.net/lombok/foto/bank/images/ilustrasi-bus-wsbk-mandalika-2022.jpg"
+         alt="Bus Travel Lombok" class="w-full aspect-square object-cover">
+  </div>
+  <div class="p-2 space-y-1">
+    <h3 class="text-sm font-medium line-clamp-2">Lintas Lombok Travel (Bus Kuta – Sade – Bandara)</h3>
+    <p class="text-amber-900 font-bold">Rp 75.000</p>
+    <div class="grid grid-cols-2 gap-1 text-sm">
+      <button onclick="checkoutProduct(this)" class="bg-amber-900 text-white py-1 rounded">Pesan Sekarang</button>
+      <button onclick="onsite(this)" class="bg-green-600 hover:bg-green-700 text-white py-1 rounded">Dari Lokasi</button>
+    </div>
+  </div>
+</article>
+
+<!-- ---------- bus 2 ---------- -->
+<article class="product-card bg-white rounded-lg overflow-hidden shadow-sm"
+  data-name="Rinjani Ekspress" data-price="65000" data-cat="bus"
+  data-destin="Pantai Senggigi"
+  data-lat="-8.5058" data-lng="116.0456" data-gmaps="Pantai Senggigi, Lombok Barat">
+  <div class="relative">
+    <img src="https://www.sgmytaxi.com/wp-content/uploads/Cepat-Ekspress-Bus.jpg"
+         alt="Rinjani Ekspress" class="w-full aspect-square object-cover">
+  </div>
+  <div class="p-2 space-y-1">
+    <h3 class="text-sm font-medium line-clamp-2">Rinjani Ekspress (Senggigi – Mataram – Rembiga)</h3>
+    <p class="text-amber-900 font-bold">Rp 65.000</p>
+    <div class="grid grid-cols-2 gap-1 text-sm">
+      <button onclick="checkoutProduct(this)" class="bg-amber-900 text-white py-1 rounded">Pesan Sekarang</button>
+      <button onclick="onsite(this)" class="bg-green-600 hover:bg-green-700 text-white py-1 rounded">Dari Lokasi</button>
+    </div>
+  </div>
+</article>
+
+<!-- bus 3 -->
+<article class="product-card bg-white rounded-lg overflow-hidden shadow-sm"
+  data-name="SasakTrans" data-price="95000" data-cat="bus"
+  data-destin="Tetebatu, Lombok Timur"
+  data-lat="-8.5657" data-lng="116.4333" data-gmaps="Tetebatu, Lombok Timur">
+  <div class="relative">
+    <img src="https://omnispace.blob.core.windows.net/strapi-prod/2022-09-19/TRAC_Big_Bus_Seat_59_7a8385c32b.png"
+         alt="SasakTrans" class="w-full aspect-square object-cover">
+  </div>
+  <div class="p-2 space-y-1">
+    <h3 class="text-sm font-medium line-clamp-2">SasakTrans (Tetebatu – Kotaraja – Sembalun)</h3>
+    <p class="text-amber-900 font-bold">Rp 95.000</p>
+    <div class="grid grid-cols-2 gap-1 text-sm">
+      <button onclick="checkoutProduct(this)" class="bg-amber-900 text-white py-1 rounded">Pesan Sekarang</button>
+      <button onclick="onsite(this)" class="bg-green-600 hover:bg-green-700 text-white py-1 rounded">Dari Lokasi</button>
+    </div>
+  </div>
+</article>
+
+
+<!-- bus 4 -->
+<article class="product-card bg-white rounded-lg overflow-hidden shadow-sm"
+  data-name="Wisata Selatan Line" data-price="75000" data-cat="bus"
+  data-destin="Bukit Merese"
+  data-lat="-8.9016" data-lng="116.3269" data-gmaps="Bukit Merese, Lombok Tengah">
+  <div class="relative">
+    <img src="https://www.busmustikaholiday.com/assets/images/bus/bigbus_jetbus_3___legrest_f3b.jpg"
+         alt="Wisata Selatan Line" class="w-full aspect-square object-cover">
+  </div>
+  <div class="p-2 space-y-1">
+    <h3 class="text-sm font-medium line-clamp-2">Wisata Selatan Line (Merese – Seger – Kuta)</h3>
+    <p class="text-amber-900 font-bold">Rp 75.000</p>
+    <div class="grid grid-cols-2 gap-1 text-sm">
+      <button onclick="checkoutProduct(this)" class="bg-amber-900 text-white py-1 rounded">Pesan Sekarang</button>
+      <button onclick="onsite(this)" class="bg-green-600 hover:bg-green-700 text-white py-1 rounded">Dari Lokasi</button>
+    </div>
+  </div>
+</article>
+
+<!-- bus 5 -->
+<article class="product-card bg-white rounded-lg overflow-hidden shadow-sm"
+  data-name="Sesaot Forest Ride" data-price="55000" data-cat="bus"
+  data-destin="Wisata Sesaot"
+  data-lat="-8.5328" data-lng="116.1784" data-gmaps="Wisata Sesaot, Lombok Barat">
+  <div class="relative">
+    <img src="https://www.buspariwisata.id/wp-content/uploads/2018/11/bus-pariwisata.id-foto-bus-pariwisata-big-bird-b.jpg"
+         alt="Sesaot Forest Ride" class="w-full aspect-square object-cover">
+  </div>
+  <div class="p-2 space-y-1">
+    <h3 class="text-sm font-medium line-clamp-2">Sesaot Forest Ride (Mataram – Sesaot – Suranadi)</h3>
+    <p class="text-amber-900 font-bold">Rp 55.000</p>
+    <div class="grid grid-cols-2 gap-1 text-sm">
+      <button onclick="checkoutProduct(this)" class="bg-amber-900 text-white py-1 rounded">Pesan Sekarang</button>
+      <button onclick="onsite(this)" class="bg-green-600 hover:bg-green-700 text-white py-1 rounded">Dari Lokasi</button>
+    </div>
+  </div>
+</article>
+
+<!-- bus 6 -->
+
+<article class="product-card bg-white rounded-lg overflow-hidden shadow-sm"
+  data-name="Batu Bolong Express" data-price="60000" data-cat="bus"
+  data-destin="Pura Batu Bolong"
+  data-lat="-8.5370" data-lng="116.0733" data-gmaps="Pura Batu Bolong, Senggigi">
+  <div class="relative">
+    <img src="https://www.saturental.com/media/uploads/2019/02/saturental-foto-bus-pariwisata-pandawa-87-shd-hdd-48-59-seats-b.jpg"
+         alt="Batu Bolong Express" class="w-full aspect-square object-cover">
+  </div>
+  <div class="p-2 space-y-1">
+    <h3 class="text-sm font-medium line-clamp-2">Batu Bolong Express (Senggigi – Batu Bolong – Mataram)</h3>
+    <p class="text-amber-900 font-bold">Rp 60.000</p>
+    <div class="grid grid-cols-2 gap-1 text-sm">
+      <button onclick="checkoutProduct(this)" class="bg-amber-900 text-white py-1 rounded">Pesan Sekarang</button>
+      <button onclick="onsite(this)" class="bg-green-600 hover:bg-green-700 text-white py-1 rounded">Dari Lokasi</button>
+    </div>
+  </div>
+</article>
+
+<!-- bus 7 -->
+
+<article class="product-card bg-white rounded-lg overflow-hidden shadow-sm"
+  data-name="Kampung Tenun Liner" data-price="70000" data-cat="bus"
+  data-destin="Kampung Tenun Pringgasela"
+  data-lat="-8.5246" data-lng="116.5269" data-gmaps="Pringgasela, Lombok Timur">
+  <div class="relative">
+    <img src="https://ganatransbali.com/wp-content/uploads/2022/12/bus-gana-35-37-seats-1.jpg"
+         alt="Kampung Tenun Liner" class="w-full aspect-square object-cover">
+  </div>
+  <div class="p-2 space-y-1">
+    <h3 class="text-sm font-medium line-clamp-2">Kampung Tenun Liner (Pringgasela – Sukarara – Bilebante)</h3>
+    <p class="text-amber-900 font-bold">Rp 70.000</p>
+    <div class="grid grid-cols-2 gap-1 text-sm">
+      <button onclick="checkoutProduct(this)" class="bg-amber-900 text-white py-1 rounded">Pesan Sekarang</button>
+      <button onclick="onsite(this)" class="bg-green-600 hover:bg-green-700 text-white py-1 rounded">Dari Lokasi</button>
+    </div>
+  </div>
+</article>
+
+
+<!-- bus 8 -->
+
+<article class="product-card bg-white rounded-lg overflow-hidden shadow-sm"
+  data-name="Gili Sudak Shuttle" data-price="85000" data-cat="bus"
+  data-destin="Gili Nanggu & Gili Sudak"
+  data-lat="-8.7485" data-lng="116.0025" data-gmaps="Pelabuhan Tawun, Gili Sudak">
+  <div class="relative">
+    <img src="https://www.buspariwisata.id/wp-content/uploads/2018/11/bus-pariwisata.id-foto-bus-pariwisata-permata-trans-c.jpg"
+         alt="Gili Sudak Shuttle" class="w-full aspect-square object-cover">
+  </div>
+  <div class="p-2 space-y-1">
+    <h3 class="text-sm font-medium line-clamp-2">Gili Sudak Shuttle (Lembar – Gili Nanggu – Sudak)</h3>
+    <p class="text-amber-900 font-bold">Rp 85.000</p>
+    <div class="grid grid-cols-2 gap-1 text-sm">
+      <button onclick="checkoutProduct(this)" class="bg-amber-900 text-white py-1 rounded">Pesan Sekarang</button>
+      <button onclick="onsite(this)" class="bg-green-600 hover:bg-green-700 text-white py-1 rounded">Dari Lokasi</button>
+    </div>
+  </div>
+</article>
+
+<!-- bus 9 -->
+<article class="product-card bg-white rounded-lg overflow-hidden shadow-sm"
+  data-name="Keramat Pilgrimage Bus" data-price="90000" data-cat="bus"
+  data-destin="Makam Keramat"
+  data-lat="-8.2963" data-lng="116.4158" data-gmaps="Makam Keramat Bayan, Lombok Utara">
+  <div class="relative">
+    <img src="https://www.busbeetrans.co.id/assets/images/bus/add/medium_bus_legrest_919.jpg"
+         alt="Keramat Pilgrimage Bus" class="w-full aspect-square object-cover">
+  </div>
+  <div class="p-2 space-y-1">
+    <h3 class="text-sm font-medium line-clamp-2">Keramat Pilgrimage Bus (Mataram – Makam Keramat)</h3>
+    <p class="text-amber-900 font-bold">Rp 90.000</p>
+    <div class="grid grid-cols-2 gap-1 text-sm">
+      <button onclick="checkoutProduct(this)" class="bg-amber-900 text-white py-1 rounded">Pesan Sekarang</button>
+      <button onclick="onsite(this)" class="bg-green-600 hover:bg-green-700 text-white py-1 rounded">Dari Lokasi</button>
+    </div>
+  </div>
+</article>
+
+<!-- bus 10 -->
+<article class="product-card bg-white rounded-lg overflow-hidden shadow-sm"
+  data-name="Gili Express Shuttle" data-price="85000" data-cat="bus"
+  data-destin="Pura Batu Bolong"
+  data-lat="-8.5338" data-lng="116.0624" data-gmaps="Pura Batu Bolong, Senggigi, Lombok">
+  <div class="relative">
+    <img src="https://www.saturental.com/media/uploads/2019/02/saturental-foto-bus-pariwisata-pandawa-87-shd-hdd-48-59-seats-c.jpg.webp"
+         alt="Gili Express Shuttle" class="w-full aspect-square object-cover">
+  </div>
+  <div class="p-2 space-y-1">
+    <h3 class="text-sm font-medium line-clamp-2">Gili Express Shuttle (Mataram – Batu Bolong – Gili Sudak)</h3>
+    <p class="text-amber-900 font-bold">Rp 85.000</p>
+    <div class="grid grid-cols-2 gap-1 text-sm">
+      <button onclick="checkoutProduct(this)" class="bg-amber-900 text-white py-1 rounded">Pesan Sekarang</button>
+      <button onclick="onsite(this)" class="bg-green-600 hover:bg-green-700 text-white py-1 rounded">Dari Lokasi</button>
+    </div>
+  </div>
+</article>
+
+<!-- bus 11 -->
+<article class="product-card bg-white rounded-lg overflow-hidden shadow-sm"
+  data-name="Pringgasela Line" data-price="80000" data-cat="bus"
+  data-destin="Kampung Tenun Pringgasela"
+  data-lat="-8.4772" data-lng="116.5416" data-gmaps="Kampung Tenun Pringgasela, Lombok Timur">
+  <div class="relative">
+    <img src="https://www.buspariwisata.id/wp-content/uploads/2018/11/bus-pariwisata.id-foto-bus-pariwisata-kupu-kupu-ayu-d.jpg"
+         alt="Pringgasela Line" class="w-full aspect-square object-cover">
+  </div>
+  <div class="p-2 space-y-1">
+    <h3 class="text-sm font-medium line-clamp-2">Pringgasela Line (Sukarara – Pringgasela)</h3>
+    <p class="text-amber-900 font-bold">Rp 80.000</p>
+    <div class="grid grid-cols-2 gap-1 text-sm">
+      <button onclick="checkoutProduct(this)" class="bg-amber-900 text-white py-1 rounded">Pesan Sekarang</button>
+      <button onclick="onsite(this)" class="bg-green-600 hover:bg-green-700 text-white py-1 rounded">Dari Lokasi</button>
+    </div>
+  </div>
+</article>
+
+<!-- bus 12 -->
+<article class="product-card bg-white rounded-lg overflow-hidden shadow-sm"
+  data-name="Lombok Green Bus" data-price="75000" data-cat="bus"
+  data-destin="Wisata Sesaot"
+  data-lat="-8.5576" data-lng="116.2284" data-gmaps="Wisata Sesaot, Narmada, Lombok Barat">
+  <div class="relative">
+    <img src="https://www.buspariwisata.id/wp-content/uploads/2018/11/bus-pariwisata.id-foto-bus-pariwisata-esem-abadi-c-480x270.jpg"
+         alt="Lombok Green Bus" class="w-full aspect-square object-cover">
+  </div>
+  <div class="p-2 space-y-1">
+    <h3 class="text-sm font-medium line-clamp-2">Lombok Green Bus (Bilebante – Sesaot)</h3>
+    <p class="text-amber-900 font-bold">Rp 75.000</p>
+    <div class="grid grid-cols-2 gap-1 text-sm">
+      <button onclick="checkoutProduct(this)" class="bg-amber-900 text-white py-1 rounded">Pesan Sekarang</button>
+      <button onclick="onsite(this)" class="bg-green-600 hover:bg-green-700 text-white py-1 rounded">Dari Lokasi</button>
+    </div>
+  </div>
+</article>
+
+<!-- bus 13 -->
+<article class="product-card bg-white rounded-lg overflow-hidden shadow-sm"
+  data-name="Pink Beach Route" data-price="100000" data-cat="bus"
+  data-destin="Pantai Pink"
+  data-lat="-8.7508" data-lng="116.5217" data-gmaps="Pantai Pink, Jerowaru, Lombok Timur">
+  <div class="relative">
+    <img src="https://www.buspariwisata.id/wp-content/uploads/2018/11/bus-pariwisata.id-foto-bus-pariwisata-sumber-anugrah-c-480x270.jpg"
+         alt="Pink Beach Route" class="w-full aspect-square object-cover">
+  </div>
+  <div class="p-2 space-y-1">
+    <h3 class="text-sm font-medium line-clamp-2">Pink Beach Route (Bandara – Pantai Pink – Tete Batu)</h3>
+    <p class="text-amber-900 font-bold">Rp 100.000</p>
+    <div class="grid grid-cols-2 gap-1 text-sm">
+      <button onclick="checkoutProduct(this)" class="bg-amber-900 text-white py-1 rounded">Pesan Sekarang</button>
+      <button onclick="onsite(this)" class="bg-green-600 hover:bg-green-700 text-white py-1 rounded">Dari Lokasi</button>
+    </div>
+  </div>
+</article>
+
+<!-- bus 14 -->
+<article class="product-card bg-white rounded-lg overflow-hidden shadow-sm"
+  data-name="Lombok Timur Heritage Bus" data-price="85000" data-cat="bus"
+  data-destin="Benteng Selong"
+  data-lat="-8.6439" data-lng="116.5309" data-gmaps="Benteng Selong, Lombok Timur">
+  <div class="relative">
+    <img src="https://www.saturental.com/media/uploads/2018/09/saturental-foto-big-bus-pariwisata-bin-ilyas-shd-hdd-terbaru-59-seats-a.jpg.webp"
+         alt="Lombok Timur Heritage Bus" class="w-full aspect-square object-cover">
+  </div>
+  <div class="p-2 space-y-1">
+    <h3 class="text-sm font-medium line-clamp-2">Lombok Timur Heritage Bus (Selong – Makam Keramat – Ende)</h3>
+    <p class="text-amber-900 font-bold">Rp 85.000</p>
+    <div class="grid grid-cols-2 gap-1 text-sm">
+      <button onclick="checkoutProduct(this)" class="bg-amber-900 text-white py-1 rounded">Pesan Sekarang</button>
+      <button onclick="onsite(this)" class="bg-green-600 hover:bg-green-700 text-white py-1 rounded">Dari Lokasi</button>
+    </div>
+  </div>
+</article>
+
+<!-- bus 15 -->
+<article class="product-card bg-white rounded-lg overflow-hidden shadow-sm"
+  data-name="Ende Village Route" data-price="65000" data-cat="bus"
+  data-destin="Desa Ende"
+  data-lat="-8.7523" data-lng="116.3342" data-gmaps="Desa Ende, Lombok Tengah">
+  <div class="relative">
+    <img src="https://www.buspariwisata.id/wp-content/uploads/2018/11/bus-pariwisata.id-foto-bus-pariwisata-big-bird-e-480x270.jpg"
+         alt="Ende Village Route" class="w-full aspect-square object-cover">
+  </div>
+  <div class="p-2 space-y-1">
+    <h3 class="text-sm font-medium line-clamp-2">Ende Village Route (Mataram – Desa Ende)</h3>
+    <p class="text-amber-900 font-bold">Rp 65.000</p>
+    <div class="grid grid-cols-2 gap-1 text-sm">
+      <button onclick="checkoutProduct(this)" class="bg-amber-900 text-white py-1 rounded">Pesan Sekarang</button>
+      <button onclick="onsite(this)" class="bg-green-600 hover:bg-green-700 text-white py-1 rounded">Dari Lokasi</button>
+    </div>
+  </div>
+</article>
+
+
+<!-- ---------- KELOMPOK HOTEL ---------- -->  
+<!-- ---------- hotel 1 ---------- -->
+<article class="product-card bg-white rounded-lg overflow-hidden shadow-sm"
+  data-name="Novotel Lombok Resort & Villas" data-price="850000" data-cat="hotel"
+  data-destin="Pantai Kuta Mandalika"
+  data-lat="-8.9027" data-lng="116.2733" data-gmaps="Novotel Lombok Resort & Villas">
+  <div class="relative">
+    <img src="https://www.ahstatic.com/photos/0571_rov2a_00_p_1024x768.jpg"
+         alt="Novotel Lombok" class="w-full aspect-square object-cover">
+  </div>
+  <div class="p-2 space-y-1">
+    <h3 class="text-sm font-medium line-clamp-2">Novotel Lombok Resort & Villas</h3>
+    <p class="text-amber-900 font-bold">Rp 850.000</p>
+    <div class="grid grid-cols-2 gap-1 text-sm">
+      <button onclick="checkoutProduct(this)" class="bg-amber-900 text-white py-1 rounded">Pesan Sekarang</button>
+      <button onclick="onsite(this)" class="bg-green-600 hover:bg-green-700 text-white py-1 rounded">Dari Lokasi</button>
+    </div>
+  </div>
+</article>
+
+<!-- ---------- hotel 2 ---------- -->
+<article class="product-card bg-white rounded-lg overflow-hidden shadow-sm"
+  data-name="Pullman Lombok Mandalika Beach Resort" data-price="1200000" data-cat="hotel"
+  data-destin="Pantai Seger"
+  data-lat="-8.9051" data-lng="116.2907" data-gmaps="Pullman Lombok Mandalika Beach Resort">
+  <div class="relative">
+    <img src="https://www.luxuriousmagazine.com/wp-content/uploads/2022/10/Pullman-Lombok-Mandalika-Beach-Resort-exterior-1536x957.jpg"
+         alt="Pullman Lombok" class="w-full aspect-square object-cover">
+  </div>
+  <div class="p-2 space-y-1">
+    <h3 class="text-sm font-medium line-clamp-2">Pullman Lombok Mandalika</h3>
+    <p class="text-amber-900 font-bold">Rp 1.200.000</p>
+    <div class="grid grid-cols-2 gap-1 text-sm">
+      <button onclick="checkoutProduct(this)" class="bg-amber-900 text-white py-1 rounded">Pesan Sekarang</button>
+      <button onclick="onsite(this)" class="bg-green-600 hover:bg-green-700 text-white py-1 rounded">Dari Lokasi</button>
+    </div>
+  </div>
+</article>
+
+<!-- ---------- hotel 3 ---------- -->
+<article class="product-card bg-white rounded-lg overflow-hidden shadow-sm"
+  data-name="Sade Guesthouse" data-price="250000" data-cat="hotel"
+  data-destin="Desa Adat Sade"
+  data-lat="-8.8389" data-lng="116.2952" data-gmaps="Sade Guesthouse Lombok">
+  <div class="relative">
+    <img src="https://authentic-indonesia.com/wp-content/uploads/2020/08/the-sade-house-floors-are-covered-with-buffalo-dung.jpg"
+         alt="Sade Guesthouse" class="w-full aspect-square object-cover">
+  </div>
+  <div class="p-2 space-y-1">
+    <h3 class="text-sm font-medium line-clamp-2">Sade Guesthouse</h3>
+    <p class="text-amber-900 font-bold">Rp 250.000</p>
+    <div class="grid grid-cols-2 gap-1 text-sm">
+      <button onclick="checkoutProduct(this)" class="bg-amber-900 text-white py-1 rounded">Pesan Sekarang</button>
+      <button onclick="onsite(this)" class="bg-green-600 hover:bg-green-700 text-white py-1 rounded">Dari Lokasi</button>
+    </div>
+  </div>
+</article>
+
+<!-- ---------- hotel 4 ---------- -->
+<article class="product-card bg-white rounded-lg overflow-hidden shadow-sm"
+  data-name="Rinjani Lodge" data-price="900000" data-cat="hotel"
+  data-destin="Gunung Rinjani"
+  data-lat="-8.3737" data-lng="116.4221" data-gmaps="Rinjani Lodge, Senaru">
+  <div class="relative">
+    <img src="https://www.rinjanilodge.com/wp-content/uploads/Rinjani-Mount-Lodge-.jpg"
+         alt="Rinjani Lodge" class="w-full aspect-square object-cover">
+  </div>
+  <div class="p-2 space-y-1">
+    <h3 class="text-sm font-medium line-clamp-2">Rinjani Lodge</h3>
+    <p class="text-amber-900 font-bold">Rp 900.000</p>
+    <div class="grid grid-cols-2 gap-1 text-sm">
+      <button onclick="checkoutProduct(this)" class="bg-amber-900 text-white py-1 rounded">Pesan Sekarang</button>
+      <button onclick="onsite(this)" class="bg-green-600 hover:bg-green-700 text-white py-1 rounded">Dari Lokasi</button>
+    </div>
+  </div>
+</article>
+
+<!-- ---------- hotel 5 ---------- -->
+<article class="product-card bg-white rounded-lg overflow-hidden shadow-sm"
+  data-name="Merese Hill Villas" data-price="700000" data-cat="hotel"
+  data-destin="Bukit Merese"
+  data-lat="-8.8954" data-lng="116.2769" data-gmaps="Merese Hill Villas">
+  <div class="relative">
+    <img src="https://tse2.mm.bing.net/th/id/OIP.FwURwTxaK3pvGXG5yiR8zQHaE7?pid=Api&P=0&h=180"
+         alt="Merese Hill Villas" class="w-full aspect-square object-cover">
+  </div>
+  <div class="p-2 space-y-1">
+    <h3 class="text-sm font-medium line-clamp-2">Merese Hill Villas</h3>
+    <p class="text-amber-900 font-bold">Rp 700.000</p>
+    <div class="grid grid-cols-2 gap-1 text-sm">
+      <button onclick="checkoutProduct(this)" class="bg-amber-900 text-white py-1 rounded">Pesan Sekarang</button>
+      <button onclick="onsite(this)" class="bg-green-600 hover:bg-green-700 text-white py-1 rounded">Dari Lokasi</button>
+    </div>
+  </div>
+</article>
+
+<!-- ---------- hotel 6 ---------- -->
+<article class="product-card bg-white rounded-lg overflow-hidden shadow-sm"
+  data-name="Tiu Kelep Guesthouse" data-price="150000" data-cat="hotel"
+  data-destin="Air Terjun Tiu Kelep"
+  data-lat="-8.3363" data-lng="116.4039" data-gmaps="Tiu Kelep Guesthouse, Senaru">
+  <div class="relative">
+    <img src="https://tse1.mm.bing.net/th/id/OIP.jQTxg1VrC1vvF6vOibC--QHaFj?pid=Api&P=0&h=180"
+         alt="Tiu Kelep Guesthouse" class="w-full aspect-square object-cover">
+  </div>
+  <div class="p-2 space-y-1">
+    <h3 class="text-sm font-medium line-clamp-2">Tiu Kelep Guesthouse</h3>
+    <p class="text-amber-900 font-bold">Rp 150.000</p>
+    <div class="grid grid-cols-2 gap-1 text-sm">
+      <button onclick="checkoutProduct(this)" class="bg-amber-900 text-white py-1 rounded">Pesan Sekarang</button>
+      <button onclick="onsite(this)" class="bg-green-600 hover:bg-green-700 text-white py-1 rounded">Dari Lokasi</button>
+    </div>
+  </div>
+</article>
+
+
+
+<!-- ---------- hotel 7 ---------- -->
+<article class="product-card bg-white rounded-lg overflow-hidden shadow-sm"
+  data-name="PinkCoco Gili Trawangan (Dekat Pantai Pink)" data-price="950000" data-cat="hotel"
+  data-destin="Pantai Pink"
+  data-lat="-8.8087" data-lng="116.5993" data-gmaps="PinkCoco, Lombok">
+  <div class="relative">
+    <img src="https://bali.com/wp-content/uploads/2022/09/pinkcoco-gili-trawangan.jpg"
+         alt="PinkCoco Hotel" class="w-full aspect-square object-cover">
+  </div>
+  <div class="p-2 space-y-1">
+    <h3 class="text-sm font-medium line-clamp-2">PinkCoco Gili</h3>
+    <p class="text-amber-900 font-bold">Rp 950.000</p>
+    <div class="grid grid-cols-2 gap-1 text-sm">
+      <button onclick="checkoutProduct(this)" class="bg-amber-900 text-white py-1 rounded">Pesan Sekarang</button>
+      <button onclick="onsite(this)" class="bg-green-600 hover:bg-green-700 text-white py-1 rounded">Dari Lokasi</button>
+    </div>
+  </div>
+</article>
+
+<!-- ---------- hotel 8 ---------- -->
+<article class="product-card bg-white rounded-lg overflow-hidden shadow-sm"
+  data-name="Ende Sasak Homestay" data-price="180000" data-cat="hotel"
+  data-destin="Desa Ende"
+  data-lat="-8.8497" data-lng="116.2725" data-gmaps="Ende Sasak Homestay">
+  <div class="relative">
+    <img src="https://dynamic-media-cdn.tripadvisor.com/media/photo-o/07/4f/e7/ec/rooms-overlooking-the.jpg?w=1200&h=-1&s=1"
+         alt="Ende Homestay" class="w-full aspect-square object-cover">
+  </div>
+  <div class="p-2 space-y-1">
+    <h3 class="text-sm font-medium line-clamp-2">Ende Sasak Homestay</h3>
+    <p class="text-amber-900 font-bold">Rp 180.000</p>
+    <div class="grid grid-cols-2 gap-1 text-sm">
+      <button onclick="checkoutProduct(this)" class="bg-amber-900 text-white py-1 rounded">Pesan Sekarang</button>
+      <button onclick="onsite(this)" class="bg-green-600 hover:bg-green-700 text-white py-1 rounded">Dari Lokasi</button>
+    </div>
+  </div>
+</article>
+
+<!-- ---------- hotel 9 ---------- -->
+<article class="product-card bg-white rounded-lg overflow-hidden shadow-sm"
+  data-name="Bayan Heritage Hotel" data-price="320000" data-cat="hotel"
+  data-destin="Masjid Kuno Bayan Beleq"
+  data-lat="-8.3036" data-lng="116.3564" data-gmaps="Bayan Heritage Hotel">
+  <div class="relative">
+    <img src="https://tse4.mm.bing.net/th/id/OIP.O0su0pbZN7hPtvVp2g6D2QHaFj?pid=Api&P=0&h=180"
+         alt="Bayan Heritage Hotel" class="w-full aspect-square object-cover">
+  </div>
+  <div class="p-2 space-y-1">
+    <h3 class="text-sm font-medium line-clamp-2">Bayan Heritage Hotel</h3>
+    <p class="text-amber-900 font-bold">Rp 320.000</p>
+    <div class="grid grid-cols-2 gap-1 text-sm">
+      <button onclick="checkoutProduct(this)" class="bg-amber-900 text-white py-1 rounded">Pesan Sekarang</button>
+      <button onclick="onsite(this)" class="bg-green-600 hover:bg-green-700 text-white py-1 rounded">Dari Lokasi</button>
+    </div>
+  </div>
+</article>
+
+<!-- ---------- hotel 10 ---------- -->
+<article class="product-card bg-white rounded-lg overflow-hidden shadow-sm"
+  data-name="Keramat Resort" data-price="400000" data-cat="hotel"
+  data-destin="Makam Keramat"
+  data-lat="-8.7105" data-lng="116.5082" data-gmaps="Keramat Resort Lombok">
+  <div class="relative">
+    <img src="https://firstlomboktour.com/wp-content/uploads/2023/02/Homestay-di-Lombok.jpg"
+         alt="Keramat Resort" class="w-full aspect-square object-cover">
+  </div>
+  <div class="p-2 space-y-1">
+    <h3 class="text-sm font-medium line-clamp-2">Keramat Resort</h3>
+    <p class="text-amber-900 font-bold">Rp 400.000</p>
+    <div class="grid grid-cols-2 gap-1 text-sm">
+      <button onclick="checkoutProduct(this)" class="bg-amber-900 text-white py-1 rounded">Pesan Sekarang</button>
+      <button onclick="onsite(this)" class="bg-green-600 hover:bg-green-700 text-white py-1 rounded">Dari Lokasi</button>
+    </div>
+  </div>
+</article>
+
+<!-- ---------- hotel 11 ---------- -->
+<article class="product-card bg-white rounded-lg overflow-hidden shadow-sm"
+  data-name="The Jayakarta Lombok" data-price="600000" data-cat="hotel"
+  data-destin="Pura Batu Bolong"
+  data-lat="-8.5274" data-lng="116.0622" data-gmaps="The Jayakarta Lombok Beach Resort">
+  <div class="relative">
+    <img src="https://tse4.mm.bing.net/th/id/OIP.9_ctah0RReCSk_7d9sQIuQHaEs?pid=Api&P=0&h=180"
+         alt="Jayakarta Hotel" class="w-full aspect-square object-cover">
+  </div>
+  <div class="p-2 space-y-1">
+    <h3 class="text-sm font-medium line-clamp-2">The Jayakarta Lombok</h3>
+    <p class="text-amber-900 font-bold">Rp 600.000</p>
+    <div class="grid grid-cols-2 gap-1 text-sm">
+      <button onclick="checkoutProduct(this)" class="bg-amber-900 text-white py-1 rounded">Pesan Sekarang</button>
+      <button onclick="onsite(this)" class="bg-green-600 hover:bg-green-700 text-white py-1 rounded">Dari Lokasi</button>
+    </div>
+  </div>
+</article>
+
+<!-- ---------- hotel 12 ---------- -->
+<article class="product-card bg-white rounded-lg overflow-hidden shadow-sm"
+  data-name="Sesaot Forest Homestay" data-price="200000" data-cat="hotel"
+  data-destin="Hutan Wisata Sesaot"
+  data-lat="-8.5821" data-lng="116.2284" data-gmaps="Sesaot Forest Homestay, Lombok">
+  <div class="relative">
+    <img src="https://tse3.mm.bing.net/th/id/OIP.OS1AtWcRRp6rn_LbCoB8hQHaE8?pid=Api&P=0&h=180"
+         alt="Sesaot Homestay" class="w-full aspect-square object-cover">
+  </div>
+  <div class="p-2 space-y-1">
+    <h3 class="text-sm font-medium line-clamp-2">Sesaot Forest Homestay</h3>
+    <p class="text-amber-900 font-bold">Rp 200.000</p>
+    <div class="grid grid-cols-2 gap-1 text-sm">
+      <button onclick="checkoutProduct(this)" class="bg-amber-900 text-white py-1 rounded">Pesan Sekarang</button>
+      <button onclick="onsite(this)" class="bg-green-600 hover:bg-green-700 text-white py-1 rounded">Dari Lokasi</button>
+    </div>
+  </div>
+</article>
+
+<!-- ---------- hotel 13 ---------- -->
+<article class="product-card bg-white rounded-lg overflow-hidden shadow-sm"
+  data-name="Tenun Inn Sukarara" data-price="250000" data-cat="hotel"
+  data-destin="Sentra Tenun Sukarara"
+  data-lat="-8.6908" data-lng="116.2704" data-gmaps="Tenun Inn Sukarara">
+  <div class="relative">
+    <img src="https://tse2.mm.bing.net/th/id/OIP.NjszTCViaEp6ENv716-DcwHaFk?pid=Api&P=0&h=180"
+         alt="Tenun Inn Sukarara" class="w-full aspect-square object-cover">
+  </div>
+  <div class="p-2 space-y-1">
+    <h3 class="text-sm font-medium line-clamp-2">Tenun Inn Sukarara</h3>
+    <p class="text-amber-900 font-bold">Rp 250.000</p>
+    <div class="grid grid-cols-2 gap-1 text-sm">
+      <button onclick="checkoutProduct(this)" class="bg-amber-900 text-white py-1 rounded">Pesan Sekarang</button>
+      <button onclick="onsite(this)" class="bg-green-600 hover:bg-green-700 text-white py-1 rounded">Dari Lokasi</button>
+    </div>
+  </div>
+</article>
+
+<!-- ---------- hotel 14 ---------- -->
+<article class="product-card bg-white rounded-lg overflow-hidden shadow-sm"
+  data-name="Dusun Beleq Bungalow" data-price="220000" data-cat="hotel"
+  data-destin="Dusun Adat Beleq"
+  data-lat="-8.7744" data-lng="116.3831" data-gmaps="Dusun Beleq Bungalow">
+  <div class="relative">
+    <img src="https://authentic-indonesia.com/wp-content/uploads/2019/11/floating-lodges-in-dusun-bambu-lembang-1024x683.jpg"
+         alt="Dusun Beleq Bungalow" class="w-full aspect-square object-cover">
+  </div>
+  <div class="p-2 space-y-1">
+    <h3 class="text-sm font-medium line-clamp-2">Dusun Beleq Bungalow</h3>
+    <p class="text-amber-900 font-bold">Rp 220.000</p>
+    <div class="grid grid-cols-2 gap-1 text-sm">
+      <button onclick="checkoutProduct(this)" class="bg-amber-900 text-white py-1 rounded">Pesan Sekarang</button>
+      <button onclick="onsite(this)" class="bg-green-600 hover:bg-green-700 text-white py-1 rounded">Dari Lokasi</button>
+    </div>
+  </div>
+</article>
+
+<!-- ---------- hotel 15 ---------- -->
+<article class="product-card bg-white rounded-lg overflow-hidden shadow-sm"
+  data-name="Tete Batu Garden Resort" data-price="380000" data-cat="hotel"
+  data-destin="Tete Batu"
+  data-lat="-8.5301" data-lng="116.4512" data-gmaps="Tetebatu Garden Resort">
+  <div class="relative">
+    <img src="https://cf.bstatic.com/xdata/images/hotel/max1024x768/633485462.jpg?k=6b26dd426f7ee4d78e56efeabc17900616de87632530ef7bd391e41c5b2e1f7c&o=&hp=1"
+         alt="Tete Batu Garden" class="w-full aspect-square object-cover">
+  </div>
+  <div class="p-2 space-y-1">
+    <h3 class="text-sm font-medium line-clamp-2">Tete Batu Garden Resort</h3>
+    <p class="text-amber-900 font-bold">Rp 380.000</p>
+    <div class="grid grid-cols-2 gap-1 text-sm">
+      <button onclick="checkoutProduct(this)" class="bg-amber-900 text-white py-1 rounded">Pesan Sekarang</button>
+      <button onclick="onsite(this)" class="bg-green-600 hover:bg-green-700 text-white py-1 rounded">Dari Lokasi</button>
+    </div>
+  </div>
+</article>
+
+</main>
+
+<!-- ===== PETA ===== -->
+<section class="max-w-7xl mx-auto px-4 pb-10">
+  <div id="map" class="rounded-lg shadow"></div>
+</section>
+
+<!-- ===== MODAL CHECKOUT ===== -->
+<div id="checkoutModal" class="fixed inset-0 bg-black/40 flex items-start justify-center hidden z-20 overflow-y-auto py-4">
+  <div class="bg-white w-full max-w-md rounded-lg shadow-lg p-4 relative my-4">
+    <button onclick="closeCheckout()" class="absolute top-2 right-2 text-gray-500 hover:text-black">&times;</button>
+    <h3 class="text-lg font-semibold mb-3">Form Pemesanan</h3>
+    
+    <div id="productInfo" class="border p-2 rounded mb-3 text-sm"></div>
+    
+    <form id="checkoutForm" class="space-y-2 text-sm">
+      <input id="buyerName" required placeholder="Nama pemesan"
+            class="w-full border p-2 rounded text-sm" />
+
+      <input id="buyerPhone" required pattern="^[0-9+ ]{8,}$"
+            placeholder="Nomor HP (WhatsApp)"
+            class="w-full border p-2 rounded text-sm" />
+
+      <textarea id="buyerAddr" required rows="2"
+                placeholder="Alamat lengkap"
+                class="w-full border p-2 rounded text-sm"></textarea>
+
+      <!-- Tambahan: Form Hotel -->
+      <div id="hotelFields" class="hidden space-y-2 text-sm">
+        <input type="number" min="1" placeholder="Jumlah Tamu yang Menginap"
+               class="w-full border p-2 rounded text-sm" name="guestCount" required />
+        
+        <div>
+          <label class="block text-xs font-semibold">Tanggal & Jam Check-In</label>
+          <input type="datetime-local" name="checkin" class="w-full border p-2 rounded text-sm" required />
+        </div>
+
+        <div>
+          <label class="block text-xs font-semibold">Tanggal & Jam Check-Out</label>
+          <input type="datetime-local" name="checkout" class="w-full border p-2 rounded text-sm" required />
+        </div>
       </div>
-    </article>
 
-    <!-- Motif Ragi Genep -->
-    <article class="card bg-white rounded-lg overflow-hidden shadow transition-transform">
-      <img src="https://www.jokembe.com/source/Kain%20tenun%20Khas%20Desa%20Sade%2C%20Lombok%20Tengah%20Motif%20Ragi%20Genep.jpg" alt="Motif Ragi Genep" class="h-48 w-full object-cover">
-      <div class="p-4 space-y-2">
-        <h3 class="font-semibold text-lg">Motif Ragi Genep</h3>
-        <p class="text-sm">Arti Ragi dalam ungkapan bahasa Sasak adalah syarat. Tata cara "Genep" berarti cukup. Ungkapan ini mengandung makna orang yang hendak berpergian sebaiknya berpakaian yang memenuhi syarat.</p>
-        <details class="text-sm">
-          <summary class="cursor-pointer text-amber-700 font-medium">Lihat lebih banyak</summary>
-          <p class="mt-2">Motif ini biasanya ada pada kain sarung sehingga sering digunakan untuk kegiatan sehari-hari, baik oleh pria mau pun wanita. Pria untuk dodot sementara Wanita sebagai Selendang. Kain ini dibuat sesuai dengan tata cara/norma yang berlaku di masyarakat Sasak.</p>
-        </details>
+      <!-- Tambahan: Form Bus -->
+      <div id="busFields" class="hidden space-y-2 text-sm">
+        <input type="number" min="1" placeholder="Jumlah Penumpang"
+               class="w-full border p-2 rounded text-sm" name="passengerCount" required />
       </div>
-    </article>
 
-    <!-- Motif Rangrang -->
-    <article class="card bg-white rounded-lg overflow-hidden shadow transition-transform">
-      <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRAnqbwpH-LHrzobkq7GM9zVM6lFv7xR78BTw&s" alt="Motif Rangrang" class="h-48 w-full object-cover">
-      <div class="p-4 space-y-2">
-        <h3 class="font-semibold text-lg">Motif Rangrang</h3>
-        <p class="text-sm">Motif Rangrang adalah perpaduan antara kain khas Lombok dengan kain tradisional Bali yang memiliki corak zig-zag serta kombinasi warna mencolok.</p>
-        <details class="text-sm">
-          <summary class="cursor-pointer text-amber-700 font-medium">Lihat lebih banyak</summary>
-          <p class="mt-2">Kain ini banyak dikreasikan dalam bentuk pakaian seperti kebaya tradisional, pakaian ibadah, hingga selendang. Corak Rangrang pada setiap helai kain ini menggambarkan cara hidup dan keyakinan masyarakat pada alam dan penguasa alam. Makna yang cukup filosofis ini, tak heran mengapa tenun Rangrang hingga saat ini memiliki nilai jual yang cukup tinggi hingga sekarang.</p>
-        </details>
+      <button class="w-full bg-amber-900 hover:brightness-110 text-white py-2 rounded mt-2">
+        Pesan Sekarang
+      </button>
+    </form>
+  </div>
+</div>
+
+<script>
+/* =======================  STATE  ======================= */
+let activeCat = 'all';
+let activeDest = 'all';
+let searchTerm = '';
+let currentProduct = null;
+
+/* ====================  FUNGSI INTI  ==================== */
+function refreshGrid(){
+  document.querySelectorAll('.product-card').forEach(card=>{
+    const cat  = (activeCat  === 'all' || card.dataset.cat     === activeCat);
+    const dest = (activeDest === 'all' || card.dataset.destin  === activeDest);
+    const srch = card.dataset.name.toLowerCase().includes(searchTerm);
+    card.style.display = (cat && dest && srch) ? '' : 'none';
+  });
+}
+
+/* ==================  KATEGORI BUTTON  ================== */
+document.querySelectorAll('.filter-btn').forEach(btn=>{
+  if(btn.dataset.filter==='all') btn.classList.add('bg-amber-900','text-white');
+  else                           btn.classList.add('bg-white','text-gray-800');
+
+  btn.onclick = () =>{
+    activeCat = btn.dataset.filter;
+    // styling
+    document.querySelectorAll('.filter-btn').forEach(b=>b.classList.replace('bg-amber-900','bg-white')||b.classList.replace('text-white','text-gray-800'));
+    btn.classList.replace('bg-white','bg-amber-900'); btn.classList.replace('text-gray-800','text-white');
+    refreshGrid();
+  };
+});
+
+/* ===================  DESTINASI DROPDOWN  =================== */
+document.getElementById('destSelect').onchange = e=>{
+  activeDest = e.target.value === 'all' ? 'all' : e.target.value;
+  refreshGrid();
+};
+
+/* =====================  SEARCH BOX  ===================== */
+document.getElementById('search').oninput = e=>{
+  searchTerm = e.target.value.toLowerCase();
+  refreshGrid();
+};
+
+/* =======================  PETA  ======================== */
+const map = L.map('map').setView([-8.6,116.1],9);
+L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{attribution:'&copy; OSM'}).addTo(map);
+
+document.querySelectorAll('.product-card').forEach(card=>{
+  const m = L.marker([+card.dataset.lat,+card.dataset.lng]).addTo(map).bindPopup(card.dataset.name);
+  card.dataset.markerId = m._leaflet_id;
+});
+function onsite(btn){
+  const c = btn.closest('.product-card');
+  map.flyTo([c.dataset.lat,c.dataset.lng],13);
+  map._layers[c.dataset.markerId].openPopup();
+  window.open(`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(c.dataset.gmaps)}`,'_blank');
+}
+
+/* ================  TOGGLE FORM TAMBAHAN  ================ */
+function toggleExtraForm() {
+  const orderType = document.querySelector('input[name="orderType"]:checked').value;
+  
+  // Sembunyikan semua form tambahan terlebih dahulu
+  document.getElementById('hotelFields').classList.add('hidden');
+  document.getElementById('busFields').classList.add('hidden');
+  
+  // Tampilkan form sesuai jenis pemesanan
+  if (orderType === 'hotel') {
+    document.getElementById('hotelFields').classList.remove('hidden');
+  } else if (orderType === 'bus') {
+    document.getElementById('busFields').classList.remove('hidden');
+  }
+}
+
+/* ================  CHECKOUT PRODUK  ================ */
+function checkoutProduct(btn) {
+  const productCard = btn.closest('.product-card');
+  currentProduct = {
+    name: productCard.dataset.name,
+    price: +productCard.dataset.price,
+    category: productCard.dataset.cat,
+    destinasi: productCard.dataset.destin
+  };
+  
+  // Tampilkan info produk
+  document.getElementById('productInfo').innerHTML = `
+    <p><strong>${currentProduct.name}</strong></p>
+    <p>Destinasi: ${currentProduct.destinasi}</p>
+    <p>Harga: Rp ${currentProduct.price.toLocaleString('id-ID')}</p>
+  `;
+  
+  // Sembunyikan semua form tambahan terlebih dahulu
+  document.getElementById('hotelFields').classList.add('hidden');
+  document.getElementById('busFields').classList.add('hidden');
+  
+  // Tampilkan form sesuai kategori produk
+  if (currentProduct.category === 'hotel') {
+    document.getElementById('hotelFields').classList.remove('hidden');
+  } else if (currentProduct.category === 'bus') {
+    document.getElementById('busFields').classList.remove('hidden');
+  }
+  
+  // Tampilkan modal checkout
+  document.getElementById('checkoutModal').classList.remove('hidden');
+}
+
+function closeCheckout() {
+  document.getElementById('checkoutModal').classList.add('hidden');
+}
+
+checkoutForm.onsubmit = e => {
+  e.preventDefault();
+
+  // ——— siapkan data pemesanan ———
+  const orderData = {
+    product: currentProduct,
+    buyer: {
+      name: buyerName.value,
+      phone: buyerPhone.value,
+      address: buyerAddr.value
+    },
+    details: {}
+  };
+
+  // ——— tambahkan detail spesifik ———
+  if (currentProduct.category === 'hotel') {
+    orderData.details = {
+      guestCount: e.target.guestCount.value,
+      checkin: new Date(e.target.checkin.value).toLocaleString('id-ID'),
+      checkout: new Date(e.target.checkout.value).toLocaleString('id-ID')
+    };
+  } else if (currentProduct.category === 'bus') {
+    orderData.details = {
+      passengerCount: e.target.passengerCount.value
+    };
+  }
+
+  // ——— buka jendela struk ———
+  const w = window.open('', '', 'width=680,height=900');
+
+  // ——— siapkan konten struk ———
+  let receiptContent = `
+    <html>
+    <head>
+      <title>Struk Pembelian • BALEQARA</title>
+      <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
+        body{
+          font-family:'Poppins',sans-serif;
+          margin:40px;
+          position:relative;
+        }
+        body::before{
+          content:'';
+          position:fixed; inset:0;
+          background:url('https://images.fineartamerica.com/images/artworkimages/mediumlarge/3/songket-tenun-geometrik-seamless-pattern-with-creative-bali-lombok-sasak-traditional-village-motif-from-indonesian-batik-julien.jpg') repeat;
+          opacity:.06; z-index:-1;
+        }
+        .logo{
+          display:flex;align-items:center;gap:12px;margin-bottom:24px;
+        }
+        .logo img{width:60px;height:60px;border-radius:50%}
+        h2{margin:0;font-size:1.5rem;color:#78350f}
+        .meta{color:#555;margin-bottom:20px;font-size:.9rem}
+        table{width:100%;border-collapse:collapse;border-radius:8px;overflow:hidden}
+        th,td{padding:8px 10px;border-bottom:1px solid #ddd;font-size:.9rem}
+        th{background:#f5f3eb;text-align:left}
+        .ctr{text-align:center}
+        .num{text-align:right}
+        tfoot td{font-weight:600;background:#fff8e6}
+        .detail-section{margin-top:20px;background:#f9f9f9;padding:15px;border-radius:8px}
+      </style>
+    </head>
+    <body onload="window.print()">
+
+      <div class="logo">
+        <img src="assets/sasak.jpg" alt="Logo BALEQARA">
+        <h2>BALEQARA – Struk Pemesanan<h2>
       </div>
-    </article>
 
-    <!-- Motif Alang/Lumbung -->
-    <article class="card bg-white rounded-lg overflow-hidden shadow transition-transform">
-      <img src="https://www.jokembe.com/source/kain%20tentun%20songket%20khas%20sukarara%20lombok%20motif%20Alang%20atau%20Lumbung%20.jpg" alt="Motif Alang/Lumbung" class="h-48 w-full object-cover">
-      <div class="p-4 space-y-2">
-        <h3 class="font-semibold text-lg">Motif Alang/Lumbung</h3>
-        <p class="text-sm">Motif ini terinspirasi dari bentuk lumbung padi, tempat penyimpanan hasil panen yang penting bagi masyarakat agraris.</p>
-        <details class="text-sm">
-          <summary class="cursor-pointer text-amber-700 font-medium">Lihat lebih banyak</summary>
-          <p class="mt-2">Bentuk lumbung yang kokoh dan berfungsi sebagai tempat menyimpan hasil bumi menjadi simbol kesejahteraan dan kemakmuran. Motif ini mencerminkan penghargaan masyarakat Sasak terhadap pertanian sebagai sumber kehidupan.</p>
-        </details>
-      </div>
-    </article>
+      <p class="meta">
+        Tanggal&nbsp;:&nbsp;${new Date().toLocaleString('id-ID')}<br>
+        Pemesan&nbsp;:&nbsp;${orderData.buyer.name}<br>
+        Nomor HP&nbsp;:&nbsp;${orderData.buyer.phone}<br>
+        Alamat&nbsp;:&nbsp;${orderData.buyer.address.replace(/\n/g,'<br>')}
+      </p>
 
-    <!-- Motif Bintang Empat -->
-    <article class="card bg-white rounded-lg overflow-hidden shadow transition-transform">
-      <img src="https://www.jokembe.com/source/kain%20tentun%20songket%20khas%20sukarara%20lombok%20motif%20bintang%20empat%20.jpg" alt="Motif Bintang Empat" class="h-48 w-full object-cover">
-      <div class="p-4 space-y-2">
-        <h3 class="font-semibold text-lg">Motif Bintang Empat</h3>
-        <p class="text-sm">Motif ini terinspirasi dari bintang timur yang menandai terbitnya fajar dan arah mata angin.</p>
-        <details class="text-sm">
-          <summary class="cursor-pointer text-amber-700 font-medium">Lihat lebih banyak</summary>
-          <p class="mt-2">Biasanya, motif ini digambarkan dalam bentuk kotak-kotak berwarna merah dan hijau muda, atau garis-garis horizontal merah dan hitam. Melambangkan petunjuk arah hidup dan harapan baru seperti fajar yang menyingsing.</p>
-        </details>
-      </div>
-    </article>
+      <table>
+        <thead>
+          <tr><th>Produk</th><th class="num">Harga</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>${orderData.product.name}</td>
+            <td class="num">Rp ${orderData.product.price.toLocaleString('id-ID')}</td>
+          </tr>
+        </tbody>
+        <tfoot>
+          <tr><td class="num">Total&nbsp;</td><td class="num">Rp ${orderData.product.price.toLocaleString('id-ID')}</td></tr>
+        </tfoot>
+      </table>`;
 
-    <!-- Motif Keker atau Merak -->
-    <article class="card bg-white rounded-lg overflow-hidden shadow transition-transform">
-      <img src="https://www.jokembe.com/source/kain%20tentun%20songket%20khas%20sukarara%20lombok%20motif%20Keker%20atau%20Merak%20.jpg" alt="Motif Keker atau Merak" class="h-48 w-full object-cover">
-      <div class="p-4 space-y-2">
-        <h3 class="font-semibold text-lg">Motif Keker atau Merak</h3>
-        <p class="text-sm">Motif Keker atau Merak pada tenun ikat Lombok memiliki makna kedamaian, kebahagiaan, dan cinta abadi.</p>
-        <details class="text-sm">
-          <summary class="cursor-pointer text-amber-700 font-medium">Lihat lebih banyak</summary>
-          <p class="mt-2">Motif ini sering digambarkan dengan dua ekor burung merak yang saling berhadapan dan bernaung di bawah pohon. Selain itu, motif ini juga dikenal sebagai motif bulan madu karena melambangkan keabadian cinta dan kesetiaan dalam pernikahan.</p>
-        </details>
-      </div>
-    </article>
-  </section>
+  // ——— tambahkan detail spesifik ke struk ———
+  if (orderData.product.category === 'hotel') {
+    receiptContent += `
+      <div class="detail-section">
+        <h3>Detail Pemesanan Hotel</h3>
+        <p>Jumlah Tamu: ${orderData.details.guestCount}</p>
+        <p>Check-In: ${orderData.details.checkin}</p>
+        <p>Check-Out: ${orderData.details.checkout}</p>
+      </div>`;
+  } else if (orderData.product.category === 'bus') {
+    receiptContent += `
+      <div class="detail-section">
+        <h3>Detail Pemesanan Bus</h3>
+        <p>Jumlah Penumpang: ${orderData.details.passengerCount}</p>
+      </div>`;
+  }
 
-  <!-- Footer -->
-  <footer class="fixed bottom-0 left-0 right-0 bg-amber-900 text-white text-sm text-center py-3">
-    <p>&copy; 2025 BALEQARA | Tim Pengembang</p>
-  </footer>
+  receiptContent += `
+      <p style="margin-top:28px;font-size:.85rem;color:#666;text-align:center">
+        Terima kasih telah melakukan pemesanan!<br>
+        #BanggaBuatanIndonesia
+      </p>
+
+    </body>
+    </html>`;
+
+  w.document.write(receiptContent);
+  w.document.close();
+
+  // —— tampilkan pesan konfirmasi ke pengguna ——
+  alert('Terima kasih telah melakukan pemesanan! Struk Anda terbuka di jendela baru.');
+
+  // Reset form dan tutup modal
+  checkoutForm.reset();
+  closeCheckout();
+};
+
+/* =======  Panggil sekali agar kondisi awal konsisten  ======= */
+refreshGrid();
+</script>
 </body>
 </html>

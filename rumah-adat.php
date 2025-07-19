@@ -195,18 +195,7 @@ $user = $user_result->fetch_assoc();
       </div>
     </article>
 
-    <!-- Istana Sumbawa -->
-    <article class="card bg-white rounded-lg overflow-hidden shadow transition-transform animate-fadeIn">
-      <img src="https://awsimages.detik.net.id/community/media/visual/2020/11/12/rumah-dalam-loka_169.png?w=1200" alt="Istana Sumbawa" class="h-48 w-full object-cover">
-      <div class="p-4 space-y-2">
-        <h3 class="font-semibold text-lg">Istana Sumbawa</h3>
-        <p class="text-sm">Istana Bala Kuning merupakan istana kerajaan Sumbawa yang dibangun pada masa kesultanan, simbol kemegahan arsitektur lokal.</p>
-        <details class="text-sm">
-          <summary class="cursor-pointer text-amber-700 font-medium">Lihat lebih banyak</summary>
-          <p class="mt-2">Dibangun dengan 99 tiang yang melambangkan 99 nama Allah dalam Islam. Istana ini menggabungkan arsitektur lokal dengan pengaruh Bugis dan Jawa. Kini berfungsi sebagai museum yang menyimpan berbagai artefak kerajaan.</p>
-        </details>
-      </div>
-    </article>
+   
 
     <!-- Rumah Bale Tani -->
     <article class="card bg-white rounded-lg overflow-hidden shadow transition-transform animate-fadeIn">

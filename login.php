@@ -255,7 +255,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <input type="text" name="username" placeholder="Masukkan Username" required>
         <input type="password" name="password" placeholder="Masukkan Password" required>
         <button type="submit" class="btn primary">Masuk</button>
-        <a href="register.php" class="btn secondary">Buat Akun</a>
+        <a href="regis.php" class="btn secondary">Buat Akun</a>
         <div class="bottom-links">
           <a href="forgot.php">🔑 Lupa Kata Sandi?</a>
           <span>|</span>

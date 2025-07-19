@@ -252,6 +252,333 @@ if (isset($_POST['checkout'])) {
   </div>
 </article>
 
+
+
+<!-- ---------- bus 3 ---------- -->
+<article class="product-card bg-white rounded-lg overflow-hidden shadow-sm"
+  data-name="SasakTrans" data-price="95000" data-cat="bus"
+  data-destin="Tetebatu, Lombok Timur"
+  data-lat="-8.5657" data-lng="116.4333" data-gmaps="Tetebatu, Lombok Timur">
+  <div class="relative">
+    <img src="https://omnispace.blob.core.windows.net/strapi-prod/2022-09-19/TRAC_Big_Bus_Seat_59_7a8385c32b.png"
+         alt="SasakTrans" class="w-full aspect-square object-cover">
+  </div>
+  <div class="p-2 space-y-1">
+    <h3 class="text-sm font-medium line-clamp-2">SasakTrans (Tetebatu – Kotaraja – Sembalun)</h3>
+    <p class="text-amber-900 font-bold">Rp 95.000</p>
+    <div class="grid grid-cols-2 gap-1 text-sm">
+      <form method="POST" action="pesan.php">
+        <input type="hidden" name="product_name" value="SasakTrans">
+        <input type="hidden" name="product_price" value="95000">
+        <input type="hidden" name="product_category" value="bus">
+        <input type="hidden" name="product_destin" value="Tetebatu, Lombok Timur">
+        <button type="submit" name="add_to_cart" class="w-full bg-amber-900 text-white py-1 rounded">Pesan Sekarang</button>
+      </form>
+      <button onclick="onsite(this)" class="bg-green-600 hover:bg-green-700 text-white py-1 rounded">Dari Lokasi</button>
+    </div>
+  </div>
+</article>
+
+<!-- ---------- bus 4 ---------- -->
+<article class="product-card bg-white rounded-lg overflow-hidden shadow-sm"
+  data-name="Wisata Selatan Line" data-price="75000" data-cat="bus"
+  data-destin="Bukit Merese"
+  data-lat="-8.9016" data-lng="116.3269" data-gmaps="Bukit Merese, Lombok Tengah">
+  <div class="relative">
+    <img src="https://www.busmustikaholiday.com/assets/images/bus/bigbus_jetbus_3___legrest_f3b.jpg"
+         alt="Wisata Selatan Line" class="w-full aspect-square object-cover">
+  </div>
+  <div class="p-2 space-y-1">
+    <h3 class="text-sm font-medium line-clamp-2">Wisata Selatan Line (Merese – Seger – Kuta)</h3>
+    <p class="text-amber-900 font-bold">Rp 75.000</p>
+    <div class="grid grid-cols-2 gap-1 text-sm">
+      <form method="POST" action="pesan.php">
+        <input type="hidden" name="product_name" value="Wisata Selatan Line">
+        <input type="hidden" name="product_price" value="75000">
+        <input type="hidden" name="product_category" value="bus">
+        <input type="hidden" name="product_destin" value="Bukit Merese">
+        <button type="submit" name="add_to_cart" class="w-full bg-amber-900 text-white py-1 rounded">Pesan Sekarang</button>
+      </form>
+      <button onclick="onsite(this)" class="bg-green-600 hover:bg-green-700 text-white py-1 rounded">Dari Lokasi</button>
+    </div>
+  </div>
+</article>
+
+<!-- ---------- bus 5 ---------- -->
+<article class="product-card bg-white rounded-lg overflow-hidden shadow-sm"
+  data-name="Sesaot Forest Ride" data-price="55000" data-cat="bus"
+  data-destin="Wisata Sesaot"
+  data-lat="-8.5328" data-lng="116.1784" data-gmaps="Wisata Sesaot, Lombok Barat">
+  <div class="relative">
+    <img src="https://www.buspariwisata.id/wp-content/uploads/2018/11/bus-pariwisata.id-foto-bus-pariwisata-big-bird-b.jpg"
+         alt="Sesaot Forest Ride" class="w-full aspect-square object-cover">
+  </div>
+  <div class="p-2 space-y-1">
+    <h3 class="text-sm font-medium line-clamp-2">Sesaot Forest Ride (Mataram – Sesaot – Suranadi)</h3>
+    <p class="text-amber-900 font-bold">Rp 55.000</p>
+    <div class="grid grid-cols-2 gap-1 text-sm">
+      <form method="POST" action="pesan.php">
+        <input type="hidden" name="product_name" value="Sesaot Forest Ride">
+        <input type="hidden" name="product_price" value="55000">
+        <input type="hidden" name="product_category" value="bus">
+        <input type="hidden" name="product_destin" value="Wisata Sesaot">
+        <button type="submit" name="add_to_cart" class="w-full bg-amber-900 text-white py-1 rounded">Pesan Sekarang</button>
+      </form>
+      <button onclick="onsite(this)" class="bg-green-600 hover:bg-green-700 text-white py-1 rounded">Dari Lokasi</button>
+    </div>
+  </div>
+</article>
+
+<!-- ---------- bus 6 ---------- -->
+<article class="product-card bg-white rounded-lg overflow-hidden shadow-sm"
+  data-name="Batu Bolong Express" data-price="60000" data-cat="bus"
+  data-destin="Pura Batu Bolong"
+  data-lat="-8.5370" data-lng="116.0733" data-gmaps="Pura Batu Bolong, Senggigi">
+  <div class="relative">
+    <img src="https://www.saturental.com/media/uploads/2019/02/saturental-foto-bus-pariwisata-pandawa-87-shd-hdd-48-59-seats-b.jpg"
+         alt="Batu Bolong Express" class="w-full aspect-square object-cover">
+  </div>
+  <div class="p-2 space-y-1">
+    <h3 class="text-sm font-medium line-clamp-2">Batu Bolong Express (Senggigi – Batu Bolong – Mataram)</h3>
+    <p class="text-amber-900 font-bold">Rp 60.000</p>
+    <div class="grid grid-cols-2 gap-1 text-sm">
+      <form method="POST" action="pesan.php">
+        <input type="hidden" name="product_name" value="Batu Bolong Express">
+        <input type="hidden" name="product_price" value="60000">
+        <input type="hidden" name="product_category" value="bus">
+        <input type="hidden" name="product_destin" value="Pura Batu Bolong">
+        <button type="submit" name="add_to_cart" class="w-full bg-amber-900 text-white py-1 rounded">Pesan Sekarang</button>
+      </form>
+      <button onclick="onsite(this)" class="bg-green-600 hover:bg-green-700 text-white py-1 rounded">Dari Lokasi</button>
+    </div>
+  </div>
+</article>
+
+<!-- ---------- bus 7 ---------- -->
+<article class="product-card bg-white rounded-lg overflow-hidden shadow-sm"
+  data-name="Kampung Tenun Liner" data-price="70000" data-cat="bus"
+  data-destin="Kampung Tenun Pringgasela"
+  data-lat="-8.5246" data-lng="116.5269" data-gmaps="Pringgasela, Lombok Timur">
+  <div class="relative">
+    <img src="https://ganatransbali.com/wp-content/uploads/2022/12/bus-gana-35-37-seats-1.jpg"
+         alt="Kampung Tenun Liner" class="w-full aspect-square object-cover">
+  </div>
+  <div class="p-2 space-y-1">
+    <h3 class="text-sm font-medium line-clamp-2">Kampung Tenun Liner (Pringgasela – Sukarara – Bilebante)</h3>
+    <p class="text-amber-900 font-bold">Rp 70.000</p>
+    <div class="grid grid-cols-2 gap-1 text-sm">
+      <form method="POST" action="pesan.php">
+        <input type="hidden" name="product_name" value="Kampung Tenun Liner">
+        <input type="hidden" name="product_price" value="70000">
+        <input type="hidden" name="product_category" value="bus">
+        <input type="hidden" name="product_destin" value="Kampung Tenun Pringgasela">
+        <button type="submit" name="add_to_cart" class="w-full bg-amber-900 text-white py-1 rounded">Pesan Sekarang</button>
+      </form>
+      <button onclick="onsite(this)" class="bg-green-600 hover:bg-green-700 text-white py-1 rounded">Dari Lokasi</button>
+    </div>
+  </div>
+</article>
+
+<!-- ---------- bus 8 ---------- -->
+<article class="product-card bg-white rounded-lg overflow-hidden shadow-sm"
+  data-name="Gili Sudak Shuttle" data-price="85000" data-cat="bus"
+  data-destin="Gili Nanggu & Gili Sudak"
+  data-lat="-8.7485" data-lng="116.0025" data-gmaps="Pelabuhan Tawun, Gili Sudak">
+  <div class="relative">
+    <img src="https://www.buspariwisata.id/wp-content/uploads/2018/11/bus-pariwisata.id-foto-bus-pariwisata-permata-trans-c.jpg"
+         alt="Gili Sudak Shuttle" class="w-full aspect-square object-cover">
+  </div>
+  <div class="p-2 space-y-1">
+    <h3 class="text-sm font-medium line-clamp-2">Gili Sudak Shuttle (Lembar – Gili Nanggu – Sudak)</h3>
+    <p class="text-amber-900 font-bold">Rp 85.000</p>
+    <div class="grid grid-cols-2 gap-1 text-sm">
+      <form method="POST" action="pesan.php">
+        <input type="hidden" name="product_name" value="Gili Sudak Shuttle">
+        <input type="hidden" name="product_price" value="85000">
+        <input type="hidden" name="product_category" value="bus">
+        <input type="hidden" name="product_destin" value="Gili Nanggu & Gili Sudak">
+        <button type="submit" name="add_to_cart" class="w-full bg-amber-900 text-white py-1 rounded">Pesan Sekarang</button>
+      </form>
+      <button onclick="onsite(this)" class="bg-green-600 hover:bg-green-700 text-white py-1 rounded">Dari Lokasi</button>
+    </div>
+  </div>
+</article>
+
+<!-- ---------- bus 9 ---------- -->
+<article class="product-card bg-white rounded-lg overflow-hidden shadow-sm"
+  data-name="Keramat Pilgrimage Bus" data-price="90000" data-cat="bus"
+  data-destin="Makam Keramat"
+  data-lat="-8.2963" data-lng="116.4158" data-gmaps="Makam Keramat Bayan, Lombok Utara">
+  <div class="relative">
+    <img src="https://www.busbeetrans.co.id/assets/images/bus/add/medium_bus_legrest_919.jpg"
+         alt="Keramat Pilgrimage Bus" class="w-full aspect-square object-cover">
+  </div>
+  <div class="p-2 space-y-1">
+    <h3 class="text-sm font-medium line-clamp-2">Keramat Pilgrimage Bus (Mataram – Makam Keramat)</h3>
+    <p class="text-amber-900 font-bold">Rp 90.000</p>
+    <div class="grid grid-cols-2 gap-1 text-sm">
+      <form method="POST" action="pesan.php">
+        <input type="hidden" name="product_name" value="Keramat Pilgrimage Bus">
+        <input type="hidden" name="product_price" value="90000">
+        <input type="hidden" name="product_category" value="bus">
+        <input type="hidden" name="product_destin" value="Makam Keramat">
+        <button type="submit" name="add_to_cart" class="w-full bg-amber-900 text-white py-1 rounded">Pesan Sekarang</button>
+      </form>
+      <button onclick="onsite(this)" class="bg-green-600 hover:bg-green-700 text-white py-1 rounded">Dari Lokasi</button>
+    </div>
+  </div>
+</article>
+
+<!-- ---------- bus 10 ---------- -->
+<article class="product-card bg-white rounded-lg overflow-hidden shadow-sm"
+  data-name="Gili Express Shuttle" data-price="85000" data-cat="bus"
+  data-destin="Pura Batu Bolong"
+  data-lat="-8.5338" data-lng="116.0624" data-gmaps="Pura Batu Bolong, Senggigi, Lombok">
+  <div class="relative">
+    <img src="https://www.saturental.com/media/uploads/2019/02/saturental-foto-bus-pariwisata-pandawa-87-shd-hdd-48-59-seats-c.jpg.webp"
+         alt="Gili Express Shuttle" class="w-full aspect-square object-cover">
+  </div>
+  <div class="p-2 space-y-1">
+    <h3 class="text-sm font-medium line-clamp-2">Gili Express Shuttle (Mataram – Batu Bolong – Gili Sudak)</h3>
+    <p class="text-amber-900 font-bold">Rp 85.000</p>
+    <div class="grid grid-cols-2 gap-1 text-sm">
+      <form method="POST" action="pesan.php">
+        <input type="hidden" name="product_name" value="Gili Express Shuttle">
+        <input type="hidden" name="product_price" value="85000">
+        <input type="hidden" name="product_category" value="bus">
+        <input type="hidden" name="product_destin" value="Pura Batu Bolong">
+        <button type="submit" name="add_to_cart" class="w-full bg-amber-900 text-white py-1 rounded">Pesan Sekarang</button>
+      </form>
+      <button onclick="onsite(this)" class="bg-green-600 hover:bg-green-700 text-white py-1 rounded">Dari Lokasi</button>
+    </div>
+  </div>
+</article>
+
+<!-- ---------- bus 11 ---------- -->
+<article class="product-card bg-white rounded-lg overflow-hidden shadow-sm"
+  data-name="Pringgasela Line" data-price="80000" data-cat="bus"
+  data-destin="Kampung Tenun Pringgasela"
+  data-lat="-8.4772" data-lng="116.5416" data-gmaps="Kampung Tenun Pringgasela, Lombok Timur">
+  <div class="relative">
+    <img src="https://www.buspariwisata.id/wp-content/uploads/2018/11/bus-pariwisata.id-foto-bus-pariwisata-kupu-kupu-ayu-d.jpg"
+         alt="Pringgasela Line" class="w-full aspect-square object-cover">
+  </div>
+  <div class="p-2 space-y-1">
+    <h3 class="text-sm font-medium line-clamp-2">Pringgasela Line (Sukarara – Pringgasela)</h3>
+    <p class="text-amber-900 font-bold">Rp 80.000</p>
+    <div class="grid grid-cols-2 gap-1 text-sm">
+      <form method="POST" action="pesan.php">
+        <input type="hidden" name="product_name" value="Pringgasela Line">
+        <input type="hidden" name="product_price" value="80000">
+        <input type="hidden" name="product_category" value="bus">
+        <input type="hidden" name="product_destin" value="Kampung Tenun Pringgasela">
+        <button type="submit" name="add_to_cart" class="w-full bg-amber-900 text-white py-1 rounded">Pesan Sekarang</button>
+      </form>
+      <button onclick="onsite(this)" class="bg-green-600 hover:bg-green-700 text-white py-1 rounded">Dari Lokasi</button>
+    </div>
+  </div>
+</article>
+
+<!-- ---------- bus 12 ---------- -->
+<article class="product-card bg-white rounded-lg overflow-hidden shadow-sm"
+  data-name="Lombok Green Bus" data-price="75000" data-cat="bus"
+  data-destin="Wisata Sesaot"
+  data-lat="-8.5576" data-lng="116.2284" data-gmaps="Wisata Sesaot, Narmada, Lombok Barat">
+  <div class="relative">
+    <img src="https://www.buspariwisata.id/wp-content/uploads/2018/11/bus-pariwisata.id-foto-bus-pariwisata-esem-abadi-c-480x270.jpg"
+         alt="Lombok Green Bus" class="w-full aspect-square object-cover">
+  </div>
+  <div class="p-2 space-y-1">
+    <h3 class="text-sm font-medium line-clamp-2">Lombok Green Bus (Bilebante – Sesaot)</h3>
+    <p class="text-amber-900 font-bold">Rp 75.000</p>
+    <div class="grid grid-cols-2 gap-1 text-sm">
+      <form method="POST" action="pesan.php">
+        <input type="hidden" name="product_name" value="Lombok Green Bus">
+        <input type="hidden" name="product_price" value="75000">
+        <input type="hidden" name="product_category" value="bus">
+        <input type="hidden" name="product_destin" value="Wisata Sesaot">
+        <button type="submit" name="add_to_cart" class="w-full bg-amber-900 text-white py-1 rounded">Pesan Sekarang</button>
+      </form>
+      <button onclick="onsite(this)" class="bg-green-600 hover:bg-green-700 text-white py-1 rounded">Dari Lokasi</button>
+    </div>
+  </div>
+</article>
+
+<!-- ---------- bus 13 ---------- -->
+<article class="product-card bg-white rounded-lg overflow-hidden shadow-sm"
+  data-name="Pink Beach Route" data-price="100000" data-cat="bus"
+  data-destin="Pantai Pink"
+  data-lat="-8.7508" data-lng="116.5217" data-gmaps="Pantai Pink, Jerowaru, Lombok Timur">
+  <div class="relative">
+    <img src="https://www.buspariwisata.id/wp-content/uploads/2018/11/bus-pariwisata.id-foto-bus-pariwisata-sumber-anugrah-c-480x270.jpg"
+         alt="Pink Beach Route" class="w-full aspect-square object-cover">
+  </div>
+  <div class="p-2 space-y-1">
+    <h3 class="text-sm font-medium line-clamp-2">Pink Beach Route (Bandara – Pantai Pink – Tete Batu)</h3>
+    <p class="text-amber-900 font-bold">Rp 100.000</p>
+    <div class="grid grid-cols-2 gap-1 text-sm">
+      <form method="POST" action="pesan.php">
+        <input type="hidden" name="product_name" value="Pink Beach Route">
+        <input type="hidden" name="product_price" value="100000">
+        <input type="hidden" name="product_category" value="bus">
+        <input type="hidden" name="product_destin" value="Pantai Pink">
+        <button type="submit" name="add_to_cart" class="w-full bg-amber-900 text-white py-1 rounded">Pesan Sekarang</button>
+      </form>
+      <button onclick="onsite(this)" class="bg-green-600 hover:bg-green-700 text-white py-1 rounded">Dari Lokasi</button>
+    </div>
+  </div>
+</article>
+
+<!-- ---------- bus 14 ---------- -->
+<article class="product-card bg-white rounded-lg overflow-hidden shadow-sm"
+  data-name="Lombok Timur Heritage Bus" data-price="85000" data-cat="bus"
+  data-destin="Benteng Selong"
+  data-lat="-8.6439" data-lng="116.5309" data-gmaps="Benteng Selong, Lombok Timur">
+  <div class="relative">
+    <img src="https://www.saturental.com/media/uploads/2018/09/saturental-foto-big-bus-pariwisata-bin-ilyas-shd-hdd-terbaru-59-seats-a.jpg.webp"
+         alt="Lombok Timur Heritage Bus" class="w-full aspect-square object-cover">
+  </div>
+  <div class="p-2 space-y-1">
+    <h3 class="text-sm font-medium line-clamp-2">Lombok Timur Heritage Bus (Selong – Makam Keramat – Ende)</h3>
+    <p class="text-amber-900 font-bold">Rp 85.000</p>
+    <div class="grid grid-cols-2 gap-1 text-sm">
+      <form method="POST" action="pesan.php">
+        <input type="hidden" name="product_name" value="Lombok Timur Heritage Bus">
+        <input type="hidden" name="product_price" value="85000">
+        <input type="hidden" name="product_category" value="bus">
+        <input type="hidden" name="product_destin" value="Benteng Selong">
+        <button type="submit" name="add_to_cart" class="w-full bg-amber-900 text-white py-1 rounded">Pesan Sekarang</button>
+      </form>
+      <button onclick="onsite(this)" class="bg-green-600 hover:bg-green-700 text-white py-1 rounded">Dari Lokasi</button>
+    </div>
+  </div>
+</article>
+
+<!-- ---------- bus 15 ---------- -->
+<article class="product-card bg-white rounded-lg overflow-hidden shadow-sm"
+  data-name="Ende Village Route" data-price="65000" data-cat="bus"
+  data-destin="Desa Ende"
+  data-lat="-8.7523" data-lng="116.3342" data-gmaps="Desa Ende, Lombok Tengah">
+  <div class="relative">
+    <img src="https://www.buspariwisata.id/wp-content/uploads/2018/11/bus-pariwisata.id-foto-bus-pariwisata-big-bird-e-480x270.jpg"
+         alt="Ende Village Route" class="w-full aspect-square object-cover">
+  </div>
+  <div class="p-2 space-y-1">
+    <h3 class="text-sm font-medium line-clamp-2">Ende Village Route (Mataram – Desa Ende)</h3>
+    <p class="text-amber-900 font-bold">Rp 65.000</p>
+    <div class="grid grid-cols-2 gap-1 text-sm">
+      <form method="POST" action="pesan.php">
+        <input type="hidden" name="product_name" value="Ende Village Route">
+        <input type="hidden" name="product_price" value="65000">
+        <input type="hidden" name="product_category" value="bus">
+        <input type="hidden" name="product_destin" value="Desa Ende">
+        <button type="submit" name="add_to_cart" class="w-full bg-amber-900 text-white py-1 rounded">Pesan Sekarang</button>
+      </form>
+      <button onclick="onsite(this)" class="bg-green-600 hover:bg-green-700 text-white py-1 rounded">Dari Lokasi</button>
+    </div>
+  </div>
+</article>
+
 <!-- ---------- HOTEL ---------- -->
 <article class="product-card bg-white rounded-lg overflow-hidden shadow-sm"
   data-name="Novotel Lombok Resort & Villas" data-price="850000" data-cat="hotel"
@@ -294,6 +621,336 @@ if (isset($_POST['checkout'])) {
         <input type="hidden" name="product_price" value="1200000">
         <input type="hidden" name="product_category" value="hotel">
         <input type="hidden" name="product_destin" value="Pantai Seger">
+        <button type="submit" name="add_to_cart" class="w-full bg-amber-900 text-white py-1 rounded">Pesan Sekarang</button>
+      </form>
+      <button onclick="onsite(this)" class="bg-green-600 hover:bg-green-700 text-white py-1 rounded">Dari Lokasi</button>
+    </div>
+  </div>
+</article>
+
+
+
+
+
+<!-- ---------- hotel 3 ---------- -->
+<article class="product-card bg-white rounded-lg overflow-hidden shadow-sm"
+  data-name="Sade Guesthouse" data-price="250000" data-cat="hotel"
+  data-destin="Desa Adat Sade"
+  data-lat="-8.8389" data-lng="116.2952" data-gmaps="Sade Guesthouse Lombok">
+  <div class="relative">
+    <img src="https://authentic-indonesia.com/wp-content/uploads/2020/08/the-sade-house-floors-are-covered-with-buffalo-dung.jpg"
+         alt="Sade Guesthouse" class="w-full aspect-square object-cover">
+  </div>
+  <div class="p-2 space-y-1">
+    <h3 class="text-sm font-medium line-clamp-2">Sade Guesthouse</h3>
+    <p class="text-amber-900 font-bold">Rp 250.000</p>
+    <div class="grid grid-cols-2 gap-1 text-sm">
+      <form method="POST" action="pesan.php">
+        <input type="hidden" name="product_name" value="Sade Guesthouse">
+        <input type="hidden" name="product_price" value="250000">
+        <input type="hidden" name="product_category" value="hotel">
+        <input type="hidden" name="product_destin" value="Desa Adat Sade">
+        <button type="submit" name="add_to_cart" class="w-full bg-amber-900 text-white py-1 rounded">Pesan Sekarang</button>
+      </form>
+      <button onclick="onsite(this)" class="bg-green-600 hover:bg-green-700 text-white py-1 rounded">Dari Lokasi</button>
+    </div>
+  </div>
+</article>
+
+<!-- ---------- hotel 4 ---------- -->
+<article class="product-card bg-white rounded-lg overflow-hidden shadow-sm"
+  data-name="Rinjani Lodge" data-price="900000" data-cat="hotel"
+  data-destin="Gunung Rinjani"
+  data-lat="-8.3737" data-lng="116.4221" data-gmaps="Rinjani Lodge, Senaru">
+  <div class="relative">
+    <img src="https://www.rinjanilodge.com/wp-content/uploads/Rinjani-Mount-Lodge-.jpg"
+         alt="Rinjani Lodge" class="w-full aspect-square object-cover">
+  </div>
+  <div class="p-2 space-y-1">
+    <h3 class="text-sm font-medium line-clamp-2">Rinjani Lodge</h3>
+    <p class="text-amber-900 font-bold">Rp 900.000</p>
+    <div class="grid grid-cols-2 gap-1 text-sm">
+      <form method="POST" action="pesan.php">
+        <input type="hidden" name="product_name" value="Rinjani Lodge">
+        <input type="hidden" name="product_price" value="900000">
+        <input type="hidden" name="product_category" value="hotel">
+        <input type="hidden" name="product_destin" value="Gunung Rinjani">
+        <button type="submit" name="add_to_cart" class="w-full bg-amber-900 text-white py-1 rounded">Pesan Sekarang</button>
+      </form>
+      <button onclick="onsite(this)" class="bg-green-600 hover:bg-green-700 text-white py-1 rounded">Dari Lokasi</button>
+    </div>
+  </div>
+</article>
+
+<!-- ---------- hotel 5 ---------- -->
+<article class="product-card bg-white rounded-lg overflow-hidden shadow-sm"
+  data-name="Merese Hill Villas" data-price="700000" data-cat="hotel"
+  data-destin="Bukit Merese"
+  data-lat="-8.8954" data-lng="116.2769" data-gmaps="Merese Hill Villas">
+  <div class="relative">
+    <img src="https://tse2.mm.bing.net/th/id/OIP.FwURwTxaK3pvGXG5yiR8zQHaE7?pid=Api&P=0&h=180"
+         alt="Merese Hill Villas" class="w-full aspect-square object-cover">
+  </div>
+  <div class="p-2 space-y-1">
+    <h3 class="text-sm font-medium line-clamp-2">Merese Hill Villas</h3>
+    <p class="text-amber-900 font-bold">Rp 700.000</p>
+    <div class="grid grid-cols-2 gap-1 text-sm">
+      <form method="POST" action="pesan.php">
+        <input type="hidden" name="product_name" value="Merese Hill Villas">
+        <input type="hidden" name="product_price" value="700000">
+        <input type="hidden" name="product_category" value="hotel">
+        <input type="hidden" name="product_destin" value="Bukit Merese">
+        <button type="submit" name="add_to_cart" class="w-full bg-amber-900 text-white py-1 rounded">Pesan Sekarang</button>
+      </form>
+      <button onclick="onsite(this)" class="bg-green-600 hover:bg-green-700 text-white py-1 rounded">Dari Lokasi</button>
+    </div>
+  </div>
+</article>
+
+<!-- ---------- hotel 6 ---------- -->
+<article class="product-card bg-white rounded-lg overflow-hidden shadow-sm"
+  data-name="Tiu Kelep Guesthouse" data-price="150000" data-cat="hotel"
+  data-destin="Air Terjun Tiu Kelep"
+  data-lat="-8.3363" data-lng="116.4039" data-gmaps="Tiu Kelep Guesthouse, Senaru">
+  <div class="relative">
+    <img src="https://tse1.mm.bing.net/th/id/OIP.jQTxg1VrC1vvF6vOibC--QHaFj?pid=Api&P=0&h=180"
+         alt="Tiu Kelep Guesthouse" class="w-full aspect-square object-cover">
+  </div>
+  <div class="p-2 space-y-1">
+    <h3 class="text-sm font-medium line-clamp-2">Tiu Kelep Guesthouse</h3>
+    <p class="text-amber-900 font-bold">Rp 150.000</p>
+    <div class="grid grid-cols-2 gap-1 text-sm">
+      <form method="POST" action="pesan.php">
+        <input type="hidden" name="product_name" value="Tiu Kelep Guesthouse">
+        <input type="hidden" name="product_price" value="150000">
+        <input type="hidden" name="product_category" value="hotel">
+        <input type="hidden" name="product_destin" value="Air Terjun Tiu Kelep">
+        <button type="submit" name="add_to_cart" class="w-full bg-amber-900 text-white py-1 rounded">Pesan Sekarang</button>
+      </form>
+      <button onclick="onsite(this)" class="bg-green-600 hover:bg-green-700 text-white py-1 rounded">Dari Lokasi</button>
+    </div>
+  </div>
+</article>
+
+
+<!-- ---------- hotel 7 ---------- -->
+<article class="product-card bg-white rounded-lg overflow-hidden shadow-sm"
+  data-name="PinkCoco Gili Trawangan (Dekat Pantai Pink)" data-price="950000" data-cat="hotel"
+  data-destin="Pantai Pink"
+  data-lat="-8.8087" data-lng="116.5993" data-gmaps="PinkCoco, Lombok">
+  <div class="relative">
+    <img src="https://bali.com/wp-content/uploads/2022/09/pinkcoco-gili-trawangan.jpg"
+         alt="PinkCoco Hotel" class="w-full aspect-square object-cover">
+  </div>
+  <div class="p-2 space-y-1">
+    <h3 class="text-sm font-medium line-clamp-2">PinkCoco Gili</h3>
+    <p class="text-amber-900 font-bold">Rp 950.000</p>
+    <div class="grid grid-cols-2 gap-1 text-sm">
+      <form method="POST" action="pesan.php">
+        <input type="hidden" name="product_name" value="PinkCoco Gili Trawangan (Dekat Pantai Pink)">
+        <input type="hidden" name="product_price" value="950000">
+        <input type="hidden" name="product_category" value="hotel">
+        <input type="hidden" name="product_destin" value="Pantai Pink">
+        <button type="submit" name="add_to_cart" class="w-full bg-amber-900 text-white py-1 rounded">Pesan Sekarang</button>
+      </form>
+      <button onclick="onsite(this)" class="bg-green-600 hover:bg-green-700 text-white py-1 rounded">Dari Lokasi</button>
+    </div>
+  </div>
+</article>
+
+<!-- ---------- hotel 8 ---------- -->
+<article class="product-card bg-white rounded-lg overflow-hidden shadow-sm"
+  data-name="Ende Sasak Homestay" data-price="180000" data-cat="hotel"
+  data-destin="Desa Ende"
+  data-lat="-8.8497" data-lng="116.2725" data-gmaps="Ende Sasak Homestay">
+  <div class="relative">
+    <img src="https://dynamic-media-cdn.tripadvisor.com/media/photo-o/07/4f/e7/ec/rooms-overlooking-the.jpg?w=1200&h=-1&s=1"
+         alt="Ende Homestay" class="w-full aspect-square object-cover">
+  </div>
+  <div class="p-2 space-y-1">
+    <h3 class="text-sm font-medium line-clamp-2">Ende Sasak Homestay</h3>
+    <p class="text-amber-900 font-bold">Rp 180.000</p>
+    <div class="grid grid-cols-2 gap-1 text-sm">
+      <form method="POST" action="pesan.php">
+        <input type="hidden" name="product_name" value="Ende Sasak Homestay">
+        <input type="hidden" name="product_price" value="180000">
+        <input type="hidden" name="product_category" value="hotel">
+        <input type="hidden" name="product_destin" value="Desa Ende">
+        <button type="submit" name="add_to_cart" class="w-full bg-amber-900 text-white py-1 rounded">Pesan Sekarang</button>
+      </form>
+      <button onclick="onsite(this)" class="bg-green-600 hover:bg-green-700 text-white py-1 rounded">Dari Lokasi</button>
+    </div>
+  </div>
+</article>
+
+<!-- ---------- hotel 9 ---------- -->
+<article class="product-card bg-white rounded-lg overflow-hidden shadow-sm"
+  data-name="Bayan Heritage Hotel" data-price="320000" data-cat="hotel"
+  data-destin="Masjid Kuno Bayan Beleq"
+  data-lat="-8.3036" data-lng="116.3564" data-gmaps="Bayan Heritage Hotel">
+  <div class="relative">
+    <img src="https://tse4.mm.bing.net/th/id/OIP.O0su0pbZN7hPtvVp2g6D2QHaFj?pid=Api&P=0&h=180"
+         alt="Bayan Heritage Hotel" class="w-full aspect-square object-cover">
+  </div>
+  <div class="p-2 space-y-1">
+    <h3 class="text-sm font-medium line-clamp-2">Bayan Heritage Hotel</h3>
+    <p class="text-amber-900 font-bold">Rp 320.000</p>
+    <div class="grid grid-cols-2 gap-1 text-sm">
+      <form method="POST" action="pesan.php">
+        <input type="hidden" name="product_name" value="Bayan Heritage Hotel">
+        <input type="hidden" name="product_price" value="320000">
+        <input type="hidden" name="product_category" value="hotel">
+        <input type="hidden" name="product_destin" value="Masjid Kuno Bayan Beleq">
+        <button type="submit" name="add_to_cart" class="w-full bg-amber-900 text-white py-1 rounded">Pesan Sekarang</button>
+      </form>
+      <button onclick="onsite(this)" class="bg-green-600 hover:bg-green-700 text-white py-1 rounded">Dari Lokasi</button>
+    </div>
+  </div>
+</article>
+
+<!-- ---------- hotel 10 ---------- -->
+<article class="product-card bg-white rounded-lg overflow-hidden shadow-sm"
+  data-name="Keramat Resort" data-price="400000" data-cat="hotel"
+  data-destin="Makam Keramat"
+  data-lat="-8.7105" data-lng="116.5082" data-gmaps="Keramat Resort Lombok">
+  <div class="relative">
+    <img src="https://firstlomboktour.com/wp-content/uploads/2023/02/Homestay-di-Lombok.jpg"
+         alt="Keramat Resort" class="w-full aspect-square object-cover">
+  </div>
+  <div class="p-2 space-y-1">
+    <h3 class="text-sm font-medium line-clamp-2">Keramat Resort</h3>
+    <p class="text-amber-900 font-bold">Rp 400.000</p>
+    <div class="grid grid-cols-2 gap-1 text-sm">
+      <form method="POST" action="pesan.php">
+        <input type="hidden" name="product_name" value="Keramat Resort">
+        <input type="hidden" name="product_price" value="400000">
+        <input type="hidden" name="product_category" value="hotel">
+        <input type="hidden" name="product_destin" value="Makam Keramat">
+        <button type="submit" name="add_to_cart" class="w-full bg-amber-900 text-white py-1 rounded">Pesan Sekarang</button>
+      </form>
+      <button onclick="onsite(this)" class="bg-green-600 hover:bg-green-700 text-white py-1 rounded">Dari Lokasi</button>
+    </div>
+  </div>
+</article>
+
+<!-- ---------- hotel 11 ---------- -->
+<article class="product-card bg-white rounded-lg overflow-hidden shadow-sm"
+  data-name="The Jayakarta Lombok" data-price="600000" data-cat="hotel"
+  data-destin="Pura Batu Bolong"
+  data-lat="-8.5274" data-lng="116.0622" data-gmaps="The Jayakarta Lombok Beach Resort">
+  <div class="relative">
+    <img src="https://tse4.mm.bing.net/th/id/OIP.9_ctah0RReCSk_7d9sQIuQHaEs?pid=Api&P=0&h=180"
+         alt="Jayakarta Hotel" class="w-full aspect-square object-cover">
+  </div>
+  <div class="p-2 space-y-1">
+    <h3 class="text-sm font-medium line-clamp-2">The Jayakarta Lombok</h3>
+    <p class="text-amber-900 font-bold">Rp 600.000</p>
+    <div class="grid grid-cols-2 gap-1 text-sm">
+      <form method="POST" action="pesan.php">
+        <input type="hidden" name="product_name" value="The Jayakarta Lombok">
+        <input type="hidden" name="product_price" value="600000">
+        <input type="hidden" name="product_category" value="hotel">
+        <input type="hidden" name="product_destin" value="Pura Batu Bolong">
+        <button type="submit" name="add_to_cart" class="w-full bg-amber-900 text-white py-1 rounded">Pesan Sekarang</button>
+      </form>
+      <button onclick="onsite(this)" class="bg-green-600 hover:bg-green-700 text-white py-1 rounded">Dari Lokasi</button>
+    </div>
+  </div>
+</article>
+
+<!-- ---------- hotel 12 ---------- -->
+<article class="product-card bg-white rounded-lg overflow-hidden shadow-sm"
+  data-name="Sesaot Forest Homestay" data-price="200000" data-cat="hotel"
+  data-destin="Hutan Wisata Sesaot"
+  data-lat="-8.5821" data-lng="116.2284" data-gmaps="Sesaot Forest Homestay, Lombok">
+  <div class="relative">
+    <img src="https://tse3.mm.bing.net/th/id/OIP.OS1AtWcRRp6rn_LbCoB8hQHaE8?pid=Api&P=0&h=180"
+         alt="Sesaot Homestay" class="w-full aspect-square object-cover">
+  </div>
+  <div class="p-2 space-y-1">
+    <h3 class="text-sm font-medium line-clamp-2">Sesaot Forest Homestay</h3>
+    <p class="text-amber-900 font-bold">Rp 200.000</p>
+    <div class="grid grid-cols-2 gap-1 text-sm">
+      <form method="POST" action="pesan.php">
+        <input type="hidden" name="product_name" value="Sesaot Forest Homestay">
+        <input type="hidden" name="product_price" value="200000">
+        <input type="hidden" name="product_category" value="hotel">
+        <input type="hidden" name="product_destin" value="Hutan Wisata Sesaot">
+        <button type="submit" name="add_to_cart" class="w-full bg-amber-900 text-white py-1 rounded">Pesan Sekarang</button>
+      </form>
+      <button onclick="onsite(this)" class="bg-green-600 hover:bg-green-700 text-white py-1 rounded">Dari Lokasi</button>
+    </div>
+  </div>
+</article>
+
+<!-- ---------- hotel 13 ---------- -->
+<article class="product-card bg-white rounded-lg overflow-hidden shadow-sm"
+  data-name="Tenun Inn Sukarara" data-price="250000" data-cat="hotel"
+  data-destin="Sentra Tenun Sukarara"
+  data-lat="-8.6908" data-lng="116.2704" data-gmaps="Tenun Inn Sukarara">
+  <div class="relative">
+    <img src="https://tse2.mm.bing.net/th/id/OIP.NjszTCViaEp6ENv716-DcwHaFk?pid=Api&P=0&h=180"
+         alt="Tenun Inn Sukarara" class="w-full aspect-square object-cover">
+  </div>
+  <div class="p-2 space-y-1">
+    <h3 class="text-sm font-medium line-clamp-2">Tenun Inn Sukarara</h3>
+    <p class="text-amber-900 font-bold">Rp 250.000</p>
+    <div class="grid grid-cols-2 gap-1 text-sm">
+      <form method="POST" action="pesan.php">
+        <input type="hidden" name="product_name" value="Tenun Inn Sukarara">
+        <input type="hidden" name="product_price" value="250000">
+        <input type="hidden" name="product_category" value="hotel">
+        <input type="hidden" name="product_destin" value="Sentra Tenun Sukarara">
+        <button type="submit" name="add_to_cart" class="w-full bg-amber-900 text-white py-1 rounded">Pesan Sekarang</button>
+      </form>
+      <button onclick="onsite(this)" class="bg-green-600 hover:bg-green-700 text-white py-1 rounded">Dari Lokasi</button>
+    </div>
+  </div>
+</article>
+
+<!-- ---------- hotel 14 ---------- -->
+<article class="product-card bg-white rounded-lg overflow-hidden shadow-sm"
+  data-name="Dusun Beleq Bungalow" data-price="220000" data-cat="hotel"
+  data-destin="Dusun Adat Beleq"
+  data-lat="-8.7744" data-lng="116.3831" data-gmaps="Dusun Beleq Bungalow">
+  <div class="relative">
+    <img src="https://authentic-indonesia.com/wp-content/uploads/2019/11/floating-lodges-in-dusun-bambu-lembang-1024x683.jpg"
+         alt="Dusun Beleq Bungalow" class="w-full aspect-square object-cover">
+  </div>
+  <div class="p-2 space-y-1">
+    <h3 class="text-sm font-medium line-clamp-2">Dusun Beleq Bungalow</h3>
+    <p class="text-amber-900 font-bold">Rp 220.000</p>
+    <div class="grid grid-cols-2 gap-1 text-sm">
+      <form method="POST" action="pesan.php">
+        <input type="hidden" name="product_name" value="Dusun Beleq Bungalow">
+        <input type="hidden" name="product_price" value="220000">
+        <input type="hidden" name="product_category" value="hotel">
+        <input type="hidden" name="product_destin" value="Dusun Adat Beleq">
+        <button type="submit" name="add_to_cart" class="w-full bg-amber-900 text-white py-1 rounded">Pesan Sekarang</button>
+      </form>
+      <button onclick="onsite(this)" class="bg-green-600 hover:bg-green-700 text-white py-1 rounded">Dari Lokasi</button>
+    </div>
+  </div>
+</article>
+
+<!-- ---------- hotel 15 ---------- -->
+<article class="product-card bg-white rounded-lg overflow-hidden shadow-sm"
+  data-name="Tete Batu Garden Resort" data-price="380000" data-cat="hotel"
+  data-destin="Tete Batu"
+  data-lat="-8.5301" data-lng="116.4512" data-gmaps="Tetebatu Garden Resort">
+  <div class="relative">
+    <img src="https://cf.bstatic.com/xdata/images/hotel/max1024x768/633485462.jpg?k=6b26dd426f7ee4d78e56efeabc17900616de87632530ef7bd391e41c5b2e1f7c&o=&hp=1"
+         alt="Tete Batu Garden" class="w-full aspect-square object-cover">
+  </div>
+  <div class="p-2 space-y-1">
+    <h3 class="text-sm font-medium line-clamp-2">Tete Batu Garden Resort</h3>
+    <p class="text-amber-900 font-bold">Rp 380.000</p>
+    <div class="grid grid-cols-2 gap-1 text-sm">
+      <form method="POST" action="pesan.php">
+        <input type="hidden" name="product_name" value="Tete Batu Garden Resort">
+        <input type="hidden" name="product_price" value="380000">
+        <input type="hidden" name="product_category" value="hotel">
+        <input type="hidden" name="product_destin" value="Tete Batu">
         <button type="submit" name="add_to_cart" class="w-full bg-amber-900 text-white py-1 rounded">Pesan Sekarang</button>
       </form>
       <button onclick="onsite(this)" class="bg-green-600 hover:bg-green-700 text-white py-1 rounded">Dari Lokasi</button>
