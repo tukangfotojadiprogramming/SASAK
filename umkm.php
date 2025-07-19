@@ -33,6 +33,13 @@ $user = $user_result->fetch_assoc();
  .product-card:hover{box-shadow:0 6px 16px rgba(0,0,0,.08);transform:translateY(-2px)}
  .line-clamp-2{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
  #map{height:380px}
+ /* Tambahan style untuk tombol kategori */
+ .filter-btn {
+   color: black; /* Warna teks hitam untuk semua tombol */
+ }
+ .bg-amber-900 {
+   color: white; /* Khusus untuk tombol aktif, teks putih */
+ }
 </style>
 </head>
 <body class="bg-amber-100 text-gray-800">
@@ -519,14 +526,14 @@ function refreshGrid(){
 
 /* ==================  KATEGORI BUTTON  ================== */
 document.querySelectorAll('.filter-btn').forEach(btn=>{
-  if(btn.dataset.filter==='all') btn.classList.add('bg-amber-900','text-white');
-  else                           btn.classList.add('bg-white','text-gray-800');
+  if(btn.dataset.filter==='all') btn.classList.add('bg-amber-900');
+  else                           btn.classList.add('bg-white');
 
   btn.onclick = () =>{
     activeCat = btn.dataset.filter;
     // styling
-    document.querySelectorAll('.filter-btn').forEach(b=>b.classList.replace('bg-amber-900','bg-white')||b.classList.replace('text-white','text-gray-800'));
-    btn.classList.replace('bg-white','bg-amber-900'); btn.classList.replace('text-gray-800','text-white');
+    document.querySelectorAll('.filter-btn').forEach(b=>b.classList.replace('bg-amber-900','bg-white'));
+    btn.classList.replace('bg-white','bg-amber-900');
     refreshGrid();
   };
 });
@@ -639,7 +646,7 @@ checkoutForm.onsubmit = e => {
   <body onload="window.print()">
 
     <div class="logo">
-      <img src="https://placehold.co/100x100" alt="Logo BALEQARA">
+      <img src="assets/sasak.jpg" alt="Logo BALEQARA">
       <h2>BALEQARA – Struk Pembelian UMKM</h2>
     </div>
 

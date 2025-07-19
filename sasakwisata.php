@@ -76,12 +76,7 @@ while ($row = $result->fetch_assoc()) {
           <a href="<?php echo htmlspecialchars($destination['video_url']); ?>" 
              class="inline-block mt-2 text-xs underline" target="_blank">🎥 Tonton video</a>
         <?php endif; ?>
-        <div class="mt-4">
-          <a href="booking.php?destination=<?php echo urlencode($destination['name']); ?>" 
-             class="inline-block bg-amber-600 text-white text-sm py-1 px-3 rounded hover:bg-amber-700 transition">
-            Pesan Wisata
-          </a>
-        </div>
+       
       </div>
     </article>
     <?php endforeach; ?>

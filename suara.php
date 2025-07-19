@@ -83,7 +83,7 @@ $user = $user_result->fetch_assoc();
       <li><a href="umkm.php" class="block hover:text-amber-600">UMKM Lokal</a></li>
       <li><a href="suara.php" class="block hover:text-amber-600">Suara Lokal</a></li>
       <li><a href="rute.php" class="block hover:text-amber-600">Rekomendasi Wisata</a></li>
-      <li><a href="booking.php" class="block hover:text-amber-600">Tour & Wisata</a></li>
+      <li><a href="pesan.php" class="block hover:text-amber-600">Tour & Wisata</a></li>
       <li class="pt-4 border-t">
         <span class="text-gray-500">Logged in as: <?php echo htmlspecialchars($user['username']); ?></span>
       </li>
@@ -109,7 +109,7 @@ $user = $user_result->fetch_assoc();
       <div class="bg-white rounded-lg shadow-md p-6">
         <div class="flex flex-col md:flex-row gap-6">
           <div class="md:w-1/3">
-            <img src="https://asset.kompas.com/crops/XZYxABC123/0x0:1200x800/750x500/data/photo/2021/06/15/ABC123.jpg" alt="Presean" class="w-full h-64 object-cover rounded-lg">
+            <img src="assets/peresean.jpeg" alt="Presean" class="w-full h-64 object-cover rounded-lg">
           </div>
           <div class="md:w-2/3">
             <h3 class="text-xl font-semibold text-amber-900 mb-3">Suara dan Musik Pengiring Presean</h3>
@@ -118,7 +118,7 @@ $user = $user_result->fetch_assoc();
               <source src="assets/presean.mp3" type="audio/mpeg">
               Browser Anda tidak mendukung elemen audio.
             </audio>
-            <p class="text-gray-600 text-sm"><strong>Deskripsi:</strong> Rekaman langsung pertunjukan Presean di Desa Sade, Lombok Tengah. Terdengar suara rotan (penjalin), teriakan pemain, dan musik pengiring.</p>
+            <p class="text-gray-700">Rekaman langsung pertunjukan Presean di Desa Sade, Lombok Tengah. Terdengar suara rotan (penjalin), teriakan pemain, dan musik pengiring.</p>
           </div>
         </div>
       </div>
@@ -130,7 +130,7 @@ $user = $user_result->fetch_assoc();
       <div class="bg-white rounded-lg shadow-md p-6">
         <div class="flex flex-col md:flex-row gap-6">
           <div class="md:w-1/3">
-            <img src="https://asset.kompas.com/crops/XZYxABC456/0x0:1200x800/750x500/data/photo/2021/06/15/ABC456.jpg" alt="Gunung Rinjani" class="w-full h-64 object-cover rounded-lg">
+            <img src="assets/putri.jpeg" alt="Gunung Rinjani" class="w-full h-64 object-cover rounded-lg">
           </div>
           <div class="md:w-2/3">
             <h3 class="text-xl font-semibold text-amber-900 mb-3">Kisah Mistis Gunung Rinjani</h3>
@@ -139,8 +139,6 @@ $user = $user_result->fetch_assoc();
               <source src="assets/gunung.mp3" type="audio/mpeg">
               Browser Anda tidak mendukung elemen audio.
             </audio>
-            <div class="bg-amber-50 p-4 rounded-lg">
-              <h4 class="font-semibold text-amber-900 mb-2">Ringkasan Cerita:</h4>
               <p class="text-gray-700">Konon Gunung Rinjani terbentuk dari peristiwa besar ketika Dewi Anjani, penguasa alam gaib, menancapkan tongkat sakti ke bumi. Danau Segara Anak dipercaya sebagai tempat bersemayam para dewa.</p>
             </div>
           </div>
@@ -154,7 +152,7 @@ $user = $user_result->fetch_assoc();
       <div class="bg-white rounded-lg shadow-md p-6">
         <div class="flex flex-col md:flex-row gap-6">
           <div class="md:w-1/3">
-            <img src="https://asset.kompas.com/crops/XZYxABC789/0x0:1200x800/750x500/data/photo/2021/06/15/ABC789.jpg" alt="Makam Keramat" class="w-full h-64 object-cover rounded-lg">
+            <img src="assets/makam.jpeg" alt="Makam Keramat" class="w-full h-64 object-cover rounded-lg">
           </div>
           <div class="md:w-2/3">
             <h3 class="text-xl font-semibold text-amber-900 mb-3">Ritual dan Doa di Makam Keramat</h3>
@@ -163,14 +161,7 @@ $user = $user_result->fetch_assoc();
               <source src="assets/gerung.mp3" type="audio/mpeg">
               Browser Anda tidak mendukung elemen audio.
             </audio>
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <div class="bg-amber-50 p-4 rounded-lg">
-                <h4 class="font-semibold text-amber-900 mb-2">Makam Loang Baloq</h4>
-                <p class="text-gray-700 text-sm">Terletak di Mataram, makam ini dipercaya sebagai tempat bersemayam salah satu penyebar agama Islam di Lombok.</p>
-              </div>
-              <div class="bg-amber-50 p-4 rounded-lg">
-                <h4 class="font-semibold text-amber-900 mb-2">Makam Batu Layar</h4>
-                <p class="text-gray-700 text-sm">Makam keramat di Lombok Barat yang dikunjungi banyak peziarah, terutama setiap malam Jumat Kliwon.</p>
+                <p class="text-gray-700">Makam keramat di Lombok Barat yang dikunjungi banyak peziarah, terutama setiap malam Jumat Kliwon.</p>
               </div>
             </div>
           </div>
@@ -187,25 +178,12 @@ $user = $user_result->fetch_assoc();
       </div>
       <div class="md:w-2/3">
         <h3 class="text-xl font-semibold text-amber-900 mb-3">Cerita dan Tradisi Putri Mandalika</h3>
-        <p class="text-gray-700 mb-4">
-          Dengarkan kisah legendaris Putri Mandalika, seorang putri cantik dari Kerajaan Tunjung Bitu yang memilih berkorban demi perdamaian. Kisahnya diabadikan dalam tradisi Bau Nyale di pesisir selatan Lombok.
-        </p>
+        <p class="text-gray-700 mb-4">Dengarkan kisah legendaris Putri Mandalika, seorang putri cantik dari Kerajaan Tunjung Bitu yang memilih berkorban demi perdamaian. Kisahnya diabadikan dalam tradisi Bau Nyale di pesisir selatan Lombok.
         <audio controls class="w-full mb-4">
           <source src="assets/mandalika.mp3" type="audio/mpeg">
           Browser Anda tidak mendukung elemen audio.
         </audio>
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <div class="bg-amber-50 p-4 rounded-lg">
-            <h4 class="font-semibold text-amber-900 mb-2">Pantai Seger</h4>
-            <p class="text-gray-700 text-sm">
-              Tempat di mana Putri Mandalika dipercaya menghilang ke laut. Di pantai ini digelar ritual tahunan Bau Nyale, menangkap cacing laut yang dipercaya sebagai jelmaan sang putri.
-            </p>
-          </div>
-          <div class="bg-amber-50 p-4 rounded-lg">
-            <h4 class="font-semibold text-amber-900 mb-2">Monumen Putri Mandalika</h4>
-            <p class="text-gray-700 text-sm">
-              Monumen megah yang dibangun untuk mengenang pengorbanan Putri Mandalika, menjadi ikon budaya dan daya tarik wisata di Mandalika.
-            </p>
+            <p class="text-gray-700">Tempat di mana Putri Mandalika dipercaya menghilang ke laut. Di pantai ini digelar ritual tahunan Bau Nyale, menangkap cacing laut yang dipercaya sebagai jelmaan sang putri.
           </div>
         </div>
       </div>
@@ -234,7 +212,7 @@ $user = $user_result->fetch_assoc();
         <!-- Tari Gandrung -->
         <div class="audio-card bg-white rounded-lg shadow-md p-4 transition-all duration-300">
           <div class="mb-4">
-            <img src="https://i.ytimg.com/vi/DEF456/maxresdefault.jpg" alt="Tari Gandrung" class="w-full h-48 object-cover rounded-lg">
+            <img src="assets/gandrung.jpeg" alt="Tari Gandrung" class="w-full h-48 object-cover rounded-lg">
           </div>
           <h3 class="text-xl font-semibold text-amber-900 mb-2">Tari Gandrung</h3>
           <p class="text-gray-600 mb-4">Musik pengiring tari tradisional Lombok</p>
@@ -247,7 +225,7 @@ $user = $user_result->fetch_assoc();
         <!-- bekayat Sasak -->
         <div class="audio-card bg-white rounded-lg shadow-md p-4 transition-all duration-300">
           <div class="relative mb-4">
-            <img src="https://asset.kompas.com/crops/XZYxBBK789/0x0:1200x800/750x500/data/photo/2021/06/15/BBK789.jpg" alt="Bebekayat" class="w-full h-48 object-cover rounded-lg">
+            <img src="assets/bekayat.jpeg" alt="Bebekayat" class="w-full h-48 object-cover rounded-lg">
           </div>
           <h3 class="text-xl font-semibold text-amber-900 mb-2">Bebekayat Doyan Nada</h3>
           <p class="text-gray-600 mb-4">Cerita moral tentang keserakahan dan konsekuensinya</p>
@@ -261,8 +239,8 @@ $user = $user_result->fetch_assoc();
   </main>
 
   <!-- Footer -->
-  <footer class="bg-amber-900 text-white text-sm text-center py-3 mt-8">
-    <p>&copy; 2025 BALEQARA | Tim Pengembang</p>
+   <footer class="bg-amber-900 text-white text-sm text-center py-3">
+    <p>&copy; 2025 BALEQARA | Dilestarikan dengan cinta budaya.</p>
   </footer>
 
   <script>

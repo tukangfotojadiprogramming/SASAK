@@ -21,19 +21,58 @@ $user = $user_result->fetch_assoc();
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Rekomendasi Wisata - BALEQARA</title>
+  <title>Rute Wisata Kustom – Sasak Heritage</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet" />
   <script src="https://cdn.tailwindcss.com"></script>
-  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
-  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <!-- Leaflet -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" crossorigin=""/>
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" crossorigin=""></script>
   <style>
-    body {
-      font-family: 'Poppins', sans-serif;
+    body { 
+      font-family: 'Poppins', sans-serif; 
+      background:#fffdf6; 
+      color:#3b2f1f;
+      padding: 0;
+      margin: 0;
+      position: relative;
+      min-height: 100vh;
     }
+    
+    /* Header Styles */
     .gradient-header {
       background: linear-gradient(135deg, #78350f, #f59e0b);
+      padding: 1rem 1.5rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: relative;
+      z-index: 100;
     }
+    
+    /* Hamburger Menu Button */
+    #openMenu {
+      position: relative;
+      z-index: 1001;
+      cursor: pointer;
+      background: transparent;
+      border: none;
+      font-size: 2rem;
+      color: white;
+      padding: 0.5rem;
+      margin-left: auto;
+    }
+    
+    /* Map Container */
+    #map { 
+      height: 70vh;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      position: relative;
+      z-index: 1;
+    }
+    
+    /* Batik Background Pattern */
     .batik-pattern {
       background-image: url('https://images.fineartamerica.com/images/artworkimages/mediumlarge/3/songket-tenun-geometrik-seamless-pattern-with-creative-bali-lombok-sasak-traditional-village-motif-from-indonesian-batik-julien.jpg');
       background-size: cover;
@@ -42,188 +81,203 @@ $user = $user_result->fetch_assoc();
       position: absolute;
       inset: 0;
       z-index: 0;
+      pointer-events: none;
     }
-    .route-card:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    }
-    #map {
-      height: 500px;
-    }
-    .menu-enter {
+    
+    /* Mobile Menu Styles */
+    #mobileMenu {
+      position: fixed;
+      top: 0;
+      right: 0;
+      width: 280px;
+      height: 100%;
+      background: white;
+      box-shadow: -5px 0 15px rgba(0,0,0,0.1);
+      z-index: 1000;
       transform: translateX(100%);
+      transition: transform 0.3s ease;
+      padding-top: 1rem;
     }
-    .menu-enter-active {
+    
+    #mobileMenu.show {
       transform: translateX(0);
-      transition: transform 300ms ease-in-out;
     }
-    .menu-leave {
-      transform: translateX(0);
+    
+    /* Overlay Styles */
+    #overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0,0,0,0.5);
+      backdrop-filter: blur(5px);
+      z-index: 999;
+      display: none;
     }
-    .menu-leave-active {
-      transform: translateX(100%);
-      transition: transform 300ms ease-in-out;
+    
+    /* Main Content Layout */
+    main {
+      position: relative;
+      z-index: 2;
+      padding: 1.5rem;
+      max-width: 1200px;
+      margin: 0 auto;
+      width: 100%;
+    }
+    
+    /* Flex Container for Panels */
+    .flex-container {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+    
+    @media (min-width: 1024px) {
+      .flex-container {
+        flex-direction: row;
+      }
+      .panel-left {
+        width: 35%;
+      }
+      .panel-right {
+        width: 65%;
+      }
+    }
+    
+    /* Panel Styles */
+    .panel {
+      background: white;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      padding: 1.5rem;
+    }
+    
+    /* List Styles */
+    #suggestion-list, #selected-list {
+      max-height: 300px;
+      overflow-y: auto;
+      position: relative;
+      z-index: 5;
+    }
+    
+    /* Button Styles */
+    #generate-btn {
+      position: relative;
+      z-index: 5;
+      width: 100%;
+      background: #78350f;
+      color: white;
+      border: none;
+      padding: 0.8rem;
+      border-radius: 8px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+    
+    #generate-btn:hover {
+      background: #92400e;
+    }
+    
+    #generate-btn:disabled {
+      background: #d1d5db;
+      cursor: not-allowed;
+    }
+    
+    /* Footer Styles */
+    footer {
+      position: relative;
+      z-index: 10;
+      padding: 1rem;
+      background: #78350f;
+      color: white;
+      text-align: center;
+    }
+    
+    /* Utility Classes */
+    .text-xl {
+      font-size: 1.4rem;
+    }
+    .text-2xl {
+      font-size: 1.7rem;
+    }
+    .text-sm {
+      font-size: 0.95rem;
+    }
+    .rounded-lg {
+      border-radius: 14px;
     }
   </style>
 </head>
-<body class="bg-amber-50">
-  <!-- Header -->
-  <header class="gradient-header text-white p-4 shadow-md flex justify-between items-center relative overflow-hidden">
+<body class="min-h-screen flex flex-col bg-amber-50 overflow-x-hidden">
+  <!-- Header Section -->
+  <header class="gradient-header text-white shadow-md flex items-center relative overflow-hidden">
     <div class="batik-pattern"></div>
     <div class="flex items-center z-10">
-      <img src="https://placehold.co/60x60" class="rounded-full mr-3" alt="Logo Sasak" />
+      <img src="assets/sasak.jpg" class="rounded-full mr-3" alt="Logo Sasak" width="70" height="70" />
       <span class="text-xl font-bold">BALEQARA</span>
     </div>
-    <!-- Hamburger Icon -->
-    <button id="openMenu" aria-label="Buka menu" class="text-3xl cursor-pointer z-10 focus:outline-none focus:ring-2 focus:ring-white rounded">
+    
+    <!-- Hamburger Menu Button -->
+    <button id="openMenu" aria-label="Buka menu" class="z-10">
       ☰
     </button>
   </header>
 
-  <!-- Off‑canvas Mobile Menu -->
-  <nav id="mobileMenu" aria-label="Menu utama" class="fixed top-0 right-0 h-full w-64 bg-white text-amber-900 shadow-lg pt-6 transform translate-x-full transition-transform duration-300 z-50">
+  <!-- Mobile Menu -->
+  <nav id="mobileMenu" aria-label="Menu utama">
     <button id="closeMenu" aria-label="Tutup menu" class="absolute top-3 right-4 text-3xl leading-none focus:outline-none">&times;</button>
     <ul class="mt-12 space-y-6 px-6 font-semibold">
-      <li><a href="sasakwisata.php" class="block hover:text-amber-600">Sasak Wisata</a></li>
-      <li><a href="katalog.php" class="block hover:text-amber-600">Katalog Budaya</a></li>
-      <li><a href="umkm.php" class="block hover:text-amber-600">UMKM Lokal</a></li>
-      <li><a href="suara.php" class="block hover:text-amber-600">Suara Lokal</a></li>
-      <li><a href="rute.php" class="block hover:text-amber-600">Rekomendasi Wisata</a></li>
-      <li><a href="booking.php" class="block hover:text-amber-600">Tour & Wisata</a></li>
+      <li><a href="sasakwisata.php" class="block hover:text-amber-600 text-lg">Sasak Wisata</a></li>
+      <li><a href="katalog.php" class="block hover:text-amber-600 text-lg">Katalog Budaya</a></li>
+      <li><a href="umkm.php" class="block hover:text-amber-600 text-lg">UMKM Lokal</a></li>
+      <li><a href="suara.php" class="block hover:text-amber-600 text-lg">Suara Lokal</a></li>
+      <li><a href="rute.php" class="block hover:text-amber-600 text-lg">Rekomendasi Wisata</a></li>
+      <li><a href="pesan.php" class="block hover:text-amber-600 text-lg">Tour & Wisata</a></li>
       <li class="pt-4 border-t">
-        <span class="text-gray-500">Logged in as: <?php echo htmlspecialchars($user['username']); ?></span>
+        <span class="text-gray-500 text-lg">Logged in as: <?php echo htmlspecialchars($user['username']); ?></span>
       </li>
       <li>
-        <a href="logout.php" class="block text-red-600 hover:text-red-800">Logout</a>
+        <a href="logout.php" class="block text-red-600 hover:text-red-800 text-lg">Logout</a>
       </li>
     </ul>
   </nav>
 
   <!-- Overlay -->
-  <div id="overlay" class="fixed inset-0 bg-black bg-opacity-25 backdrop-blur-sm hidden z-40"></div>
+  <div id="overlay" class="fixed inset-0 z-40"></div>
 
   <!-- Main Content -->
-  <main class="max-w-7xl mx-auto px-4 py-6">
-    <h1 class="text-2xl font-bold text-amber-900 mb-2">Rekomendasi Rute Wisata Lombok</h1>
-    <p class="text-gray-700 mb-6">Temukan rute terbaik untuk menjelajahi keindahan Lombok berdasarkan preferensi Anda.</p>
+  <main class="flex-grow">
+    <div class="container mx-auto px-4 py-6 space-y-6">
+      <section class="text-center max-w-3xl mx-auto space-y-3">
+        <h2 class="text-2xl font-bold">Bangun Rencana Perjalanan Anda</h2>
+        <p class="text-sm text-gray-700">Setiap destinasi punya kisah. Susun rute perjalanan budaya Anda sendiri, dari bukit ke desa, dari laut ke tenun. Pilih tujuan, dan temukan jalannya.</p>
+      </section>
 
-    <!-- Filter Section -->
-    <div class="bg-white rounded-lg shadow p-4 mb-6">
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-        <div>
-          <label class="block text-sm font-medium text-gray-700 mb-1">Durasi Perjalanan</label>
-          <select id="duration" class="w-full p-2 border rounded">
-            <option value="all">Semua Durasi</option>
-            <option value="1">1 Hari</option>
-            <option value="2">2 Hari</option>
-            <option value="3">3 Hari</option>
-            <option value="4">4+ Hari</option>
-          </select>
-        </div>
-        <div>
-          <label class="block text-sm font-medium text-gray-700 mb-1">Tipe Wisata</label>
-          <select id="type" class="w-full p-2 border rounded">
-            <option value="all">Semua Tipe</option>
-            <option value="pantai">Pantai</option>
-            <option value="alam">Alam</option>
-            <option value="budaya">Budaya</option>
-            <option value="petualangan">Petualangan</option>
-          </select>
-        </div>
-        <div>
-          <label class="block text-sm font-medium text-gray-700 mb-1">Tingkat Aktivitas</label>
-          <select id="activity" class="w-full p-2 border rounded">
-            <option value="all">Semua Tingkat</option>
-            <option value="ringan">Ringan</option>
-            <option value="sedang">Sedang</option>
-            <option value="berat">Berat</option>
-          </select>
-        </div>
-      </div>
-    </div>
+      <div class="flex-container">
+        <!-- Left Panel -->
+        <div class="panel panel-left">
+          <div class="space-y-4">
+            <div class="panel space-y-4">
+              <h3 class="font-semibold text-lg">Destinasi Impian ke Mana?</h3>
+              <input id="search-input" type="text" placeholder="Yuk Cari Tempat Impianmu..." class="w-full border border-amber-300 rounded px-4 py-3 focus:outline-none focus:ring-2 focus:ring-amber-500" />
+              <ul id="suggestion-list" class="space-y-2"></ul>
+            </div>
 
-    <!-- Routes Grid -->
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
-      <!-- Route 1 -->
-      <div class="route-card bg-white rounded-lg shadow overflow-hidden transition-all duration-200">
-        <div class="relative h-48">
-          <img src="https://travelspromo.com/wp-content/uploads/2022/02/Keindahan-pantai-seger-lombok-berlatar-bukit.jpeg" 
-               alt="Rute Pantai Selatan" class="w-full h-full object-cover">
-          <span class="absolute top-2 left-2 bg-amber-600 text-white text-xs px-2 py-1 rounded">1 Hari</span>
-        </div>
-        <div class="p-4">
-          <h3 class="font-bold text-lg text-amber-900 mb-2">Jelajah Pantai Selatan</h3>
-          <p class="text-sm text-gray-600 mb-3">Pantai Seger, Pantai Kuta, Tanjung Aan</p>
-          <div class="flex justify-between items-center">
-            <span class="text-xs bg-amber-100 text-amber-800 px-2 py-1 rounded">Pantai</span>
-            <span class="text-xs bg-green-100 text-green-800 px-2 py-1 rounded">Ringan</span>
+            <div class="panel">
+              <h3 class="font-semibold text-lg mb-4">Destinasi Terpilih</h3>
+              <ul id="selected-list" class="space-y-3 text-base"></ul>
+              <button id="generate-btn" class="mt-5" disabled>Buat Rute</button>
+            </div>
           </div>
-          <button onclick="showRoute('pantai-selatan')" class="w-full mt-3 bg-amber-600 hover:bg-amber-700 text-white py-2 rounded text-sm">
-            Lihat Rute
-          </button>
         </div>
-      </div>
 
-      <!-- Route 2 -->
-      <div class="route-card bg-white rounded-lg shadow overflow-hidden transition-all duration-200">
-        <div class="relative h-48">
-          <img src="https://media.suara.com/pictures/970x544/2025/06/26/40338-ilustrasi-gunung-rinjani.jpg" 
-               alt="Rute Rinjani" class="w-full h-full object-cover">
-          <span class="absolute top-2 left-2 bg-amber-600 text-white text-xs px-2 py-1 rounded">3 Hari</span>
-        </div>
-        <div class="p-4">
-          <h3 class="font-bold text-lg text-amber-900 mb-2">Pendakian Rinjani</h3>
-          <p class="text-sm text-gray-600 mb-3">Senaru, Pos 2, Pos 3, Danau Segara Anak</p>
-          <div class="flex justify-between items-center">
-            <span class="text-xs bg-blue-100 text-blue-800 px-2 py-1 rounded">Alam</span>
-            <span class="text-xs bg-red-100 text-red-800 px-2 py-1 rounded">Berat</span>
-          </div>
-          <button onclick="showRoute('rinjani')" class="w-full mt-3 bg-amber-600 hover:bg-amber-700 text-white py-2 rounded text-sm">
-            Lihat Rute
-          </button>
-        </div>
-      </div>
-
-      <!-- Route 3 -->
-      <div class="route-card bg-white rounded-lg shadow overflow-hidden transition-all duration-200">
-        <div class="relative h-48">
-          <img src="https://cdn.idntimes.com/content-images/community/2020/01/19424765-245953129236714-810761388782780416-n-6fa4cbbd82db936bbc84478e9a40e3fc.jpg" 
-               alt="Rute Budaya" class="w-full h-full object-cover">
-          <span class="absolute top-2 left-2 bg-amber-600 text-white text-xs px-2 py-1 rounded">2 Hari</span>
-        </div>
-        <div class="p-4">
-          <h3 class="font-bold text-lg text-amber-900 mb-2">Tur Budaya Sasak</h3>
-          <p class="text-sm text-gray-600 mb-3">Desa Sade, Sukarara, Pringgasela</p>
-          <div class="flex justify-between items-center">
-            <span class="text-xs bg-purple-100 text-purple-800 px-2 py-1 rounded">Budaya</span>
-            <span class="text-xs bg-amber-100 text-amber-800 px-2 py-1 rounded">Sedang</span>
-          </div>
-          <button onclick="showRoute('budaya-sasak')" class="w-full mt-3 bg-amber-600 hover:bg-amber-700 text-white py-2 rounded text-sm">
-            Lihat Rute
-          </button>
-        </div>
-      </div>
-    </div>
-
-    <!-- Map Section -->
-    <div class="bg-white rounded-lg shadow p-4 mb-8">
-      <h2 class="text-xl font-bold text-amber-900 mb-4">Peta Rute Wisata</h2>
-      <div id="map" class="rounded-lg"></div>
-    </div>
-
-    <!-- Route Details Modal -->
-    <div id="routeModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden z-50">
-      <div class="bg-white rounded-lg shadow-lg w-full max-w-2xl max-h-[90vh] overflow-y-auto">
-        <div class="p-6">
-          <div class="flex justify-between items-start mb-4">
-            <h3 id="routeTitle" class="text-xl font-bold text-amber-900"></h3>
-            <button onclick="closeModal()" class="text-gray-500 hover:text-gray-700">&times;</button>
-          </div>
-          <div id="routeContent" class="space-y-4"></div>
-          <div class="mt-6">
-            <button onclick="closeModal()" class="w-full bg-amber-600 hover:bg-amber-700 text-white py-2 rounded">
-              Tutup
-            </button>
+        <!-- Right Panel (Map) -->
+        <div class="panel panel-right">
+          <div id="map"></div>
+          <div class="mt-4 text-center">
+            <p class="text-sm text-gray-600">Klik pada peta untuk menentukan titik awal perjalanan</p>
           </div>
         </div>
       </div>
@@ -231,231 +285,163 @@ $user = $user_result->fetch_assoc();
   </main>
 
   <!-- Footer -->
-  <footer class="bg-amber-900 text-white text-sm text-center py-3">
-    <p>&copy; 2025 BALEQARA | Tim Pengembang</p>
+  <footer>
+    <p>&copy; 2025 BALEQARA | Dilestarikan dengan cinta budaya.</p>
   </footer>
 
   <script>
-    // Mobile menu logic
-    const openMenuBtn = document.getElementById('openMenu');
-    const closeMenuBtn = document.getElementById('closeMenu');
-    const mobileMenu = document.getElementById('mobileMenu');
-    const overlay = document.getElementById('overlay');
+  // ===== DATA DESTINASI STANDAR =====
+  const masterDestinations = [
+    { name: "Bukit Merese", lat: -8.8825, lng: 116.3492 },
+    { name: "Pantai Seger", lat: -8.8839, lng: 116.2794 },
+    { name: "Desa Sade", lat: -8.8493, lng: 116.2894 },
+    { name: "Sentra Tenun Sukarara", lat: -8.6927, lng: 116.2681 },
+    { name: "Gunung Rinjani", lat: -8.4110, lng: 116.4583 },
+    { name: "Air Terjun Benang Stokel", lat: -8.5669, lng: 116.3649 }
+  ];
 
-    function openMenu() {
-      mobileMenu.classList.remove('translate-x-full');
-      overlay.classList.remove('hidden');
-    }
+  // ===== ELEMENT DOM =====
+  const searchInput = document.getElementById('search-input');
+  const suggEl      = document.getElementById('suggestion-list');
+  const selectEl    = document.getElementById('selected-list');
+  const genBtn      = document.getElementById('generate-btn');
 
-    function closeMenu() {
-      mobileMenu.classList.add('translate-x-full');
-      overlay.classList.add('hidden');
-    }
+  // ===== STATE =====
+  const selected = [];
+  let startMarker;   // titik awal (klik peta / geolocation)
+  let routeLine;     // polyline rute
 
-    openMenuBtn.addEventListener('click', openMenu);
-    closeMenuBtn.addEventListener('click', closeMenu);
-    overlay.addEventListener('click', closeMenu);
+  // ===== LEAFLET MAP =====
+  const map = L.map('map').setView([-8.8, 116.3], 9);
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { attribution:'&copy; OpenStreetMap' }).addTo(map);
 
-    // Initialize map
-    const map = L.map('map').setView([-8.65, 116.35], 9);
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-    }).addTo(map);
+  // ===== UTILS =====
+  function haversine(lat1, lon1, lat2, lon2){
+    const R=6371, toRad=d=>d*Math.PI/180;
+    const dLat=toRad(lat2-lat1), dLon=toRad(lon2-lon1);
+    const a=Math.sin(dLat/2)**2 + Math.cos(toRad(lat1))*Math.cos(toRad(lat2))*Math.sin(dLon/2)**2;
+    return 2*R*Math.asin(Math.sqrt(a));
+  }
 
-    // Sample route data
-    const routes = {
-      'pantai-selatan': {
-        title: 'Jelajah Pantai Selatan Lombok',
-        description: 'Rute wisata pantai di Lombok bagian selatan yang menawarkan pemandangan indah dan aktivitas air yang menyenangkan.',
-        duration: '1 Hari',
-        type: 'Pantai',
-        activity: 'Ringan',
-        itinerary: [
-          '08:00 - Berangkat dari Mataram',
-          '09:30 - Tiba di Pantai Seger, eksplorasi pantai',
-          '12:00 - Makan siang di warung lokal',
-          '13:30 - Lanjut ke Pantai Kuta',
-          '15:00 - Berenang dan bersantai di Pantai Kuta',
-          '17:00 - Sunset di Tanjung Aan',
-          '18:30 - Kembali ke Mataram'
-        ],
-        waypoints: [
-          [-8.8329, 116.3204], // Pantai Seger
-          [-8.8988, 116.3001], // Pantai Kuta
-          [-8.9115, 116.2923]  // Tanjung Aan
-        ]
-      },
-      'rinjani': {
-        title: 'Pendakian Gunung Rinjani',
-        description: 'Rute pendakian ke Gunung Rinjani melalui jalur Senaru dengan pemandangan spektakuler dan pengalaman alam yang menantang.',
-        duration: '3 Hari',
-        type: 'Alam',
-        activity: 'Berat',
-        itinerary: [
-          'Hari 1:',
-          '07:00 - Pendaftaran di pos pendakian Senaru',
-          '08:00 - Mulai pendakian ke Pos 1',
-          '12:00 - Istirahat dan makan siang di Pos 2',
-          '15:00 - Tiba di Pos 3, mendirikan tenda',
-          '18:00 - Makan malam dan istirahat',
-          '',
-          'Hari 2:',
-          '02:00 - Pendakian menuju puncak',
-          '06:00 - Tiba di puncak, menikmati sunrise',
-          '08:00 - Turun ke Danau Segara Anak',
-          '12:00 - Istirahat dan makan siang di danau',
-          '15:00 - Eksplorasi sekitar danau',
-          '18:00 - Makan malam dan istirahat',
-          '',
-          'Hari 3:',
-          '07:00 - Turun kembali ke Senaru',
-          '12:00 - Tiba di basecamp, perjalanan selesai'
-        ],
-        waypoints: [
-          [-8.3235, 116.3997], // Senaru
-          [-8.3100, 116.4100], // Pos 2
-          [-8.3000, 116.4200], // Pos 3
-          [-8.2900, 116.4300], // Puncak
-          [-8.3100, 116.4400]  // Segara Anak
-        ]
-      },
-      'budaya-sasak': {
-        title: 'Tur Budaya Sasak',
-        description: 'Perjalanan menyusuri warisan budaya suku Sasak di Lombok, mulai dari desa adat hingga sentra kerajinan tradisional.',
-        duration: '2 Hari',
-        type: 'Budaya',
-        activity: 'Sedang',
-        itinerary: [
-          'Hari 1:',
-          '08:00 - Berangkat dari Mataram',
-          '09:30 - Kunjungan ke Desa Sade, melihat rumah adat Sasak',
-          '12:00 - Makan siang dengan masakan tradisional',
-          '14:00 - Ke Sukarara melihat proses tenun tradisional',
-          '16:00 - Check-in penginapan lokal',
-          '19:00 - Makan malam dengan pertunjukan musik tradisional',
-          '',
-          'Hari 2:',
-          '08:00 - Sarapan pagi',
-          '09:30 - Ke Pringgasela melihat pembuatan songket',
-          '12:00 - Makan siang',
-          '14:00 - Kunjungan ke pasar tradisional Sukarara',
-          '16:00 - Kembali ke Mataram'
-        ],
-        waypoints: [
-          [-8.5830, 116.1160], // Desa Sade
-          [-8.8329, 116.3204],  // Sukarara
-          [-8.5500, 116.5000]   // Pringgasela
-        ]
-      }
-    };
-
-    // Show route details
-    function showRoute(routeId) {
-      const route = routes[routeId];
-      if (!route) return;
-
-      // Update modal content
-      document.getElementById('routeTitle').textContent = route.title;
-      const content = document.getElementById('routeContent');
-      
-      // Clear previous content
-      content.innerHTML = '';
-      
-      // Add description
-      const desc = document.createElement('p');
-      desc.className = 'text-gray-700';
-      desc.textContent = route.description;
-      content.appendChild(desc);
-      
-      // Add details
-      const details = document.createElement('div');
-      details.className = 'grid grid-cols-3 gap-2 mb-4';
-      details.innerHTML = `
-        <div class="bg-amber-50 p-2 rounded">
-          <p class="text-xs text-gray-500">Durasi</p>
-          <p class="font-medium">${route.duration}</p>
-        </div>
-        <div class="bg-amber-50 p-2 rounded">
-          <p class="text-xs text-gray-500">Tipe</p>
-          <p class="font-medium">${route.type}</p>
-        </div>
-        <div class="bg-amber-50 p-2 rounded">
-          <p class="text-xs text-gray-500">Aktivitas</p>
-          <p class="font-medium">${route.activity}</p>
-        </div>
-      `;
-      content.appendChild(details);
-      
-      // Add itinerary
-      const itineraryTitle = document.createElement('h4');
-      itineraryTitle.className = 'font-bold text-amber-900 mt-4';
-      itineraryTitle.textContent = 'Rincian Perjalanan:';
-      content.appendChild(itineraryTitle);
-      
-      const itineraryList = document.createElement('div');
-      itineraryList.className = 'space-y-2';
-      route.itinerary.forEach(item => {
-        const p = document.createElement('p');
-        p.className = item ? 'text-sm' : 'h-3';
-        p.textContent = item;
-        itineraryList.appendChild(p);
+  // ===== SEARCH HANDLER =====
+  searchInput.addEventListener('input',()=>{
+    const q=searchInput.value.trim().toLowerCase();
+    suggEl.innerHTML='';
+    if(!q) return;
+    const filtered=masterDestinations.filter(d=>d.name.toLowerCase().includes(q) && !selected.find(s=>s.name===d.name));
+    filtered.forEach(dest=>{
+      const li=document.createElement('li');
+      li.className="flex justify-between items-center bg-amber-50 hover:bg-amber-100 px-4 py-3 rounded-lg cursor-pointer text-base";
+      li.textContent=dest.name;
+      li.addEventListener('click',()=>{
+        addDestination(dest);
+        searchInput.value='';
+        suggEl.innerHTML='';
       });
-      content.appendChild(itineraryList);
-      
-      // Show modal
-      document.getElementById('routeModal').classList.remove('hidden');
-      
-      // Update map with route
-      updateMapRoute(route.waypoints);
-    }
+      suggEl.appendChild(li);
+    });
+  });
 
-    // Close modal
-    function closeModal() {
-      document.getElementById('routeModal').classList.add('hidden');
-      // Reset map view
-      map.setView([-8.65, 116.35], 9);
-    }
+  // ===== ADD DESTINATION =====
+  function addDestination(dest){
+    if(selected.find(d=>d.name===dest.name)) return; // duplikat
+    selected.push(dest);
+    renderSelected();
+    genBtn.disabled=false;
+    // tambahkan marker
+    const m=L.marker([dest.lat,dest.lng]).addTo(map).bindPopup(`<strong>${dest.name}</strong>`);
+    dest._marker=m;
+  }
 
-    // Update map with route waypoints
-    function updateMapRoute(waypoints) {
-      // Clear existing markers and layers
-      map.eachLayer(layer => {
-        if (layer instanceof L.Marker || layer instanceof L.Polyline) {
-          map.removeLayer(layer);
-        }
+  // ===== REMOVE DESTINATION =====
+  function removeDestination(name){
+    const idx=selected.findIndex(d=>d.name===name);
+    if(idx>-1){
+      map.removeLayer(selected[idx]._marker);
+      selected.splice(idx,1);
+      renderSelected();
+      genBtn.disabled=selected.length===0;
+      if(routeLine) map.removeLayer(routeLine);
+    }
+  }
+
+  // ===== RENDER SELECTED LIST =====
+  function renderSelected(){
+    selectEl.innerHTML='';
+    selected.forEach((d,i)=>{
+      const li=document.createElement('li');
+      li.className="flex justify-between items-center bg-amber-50 px-4 py-3 rounded-lg";
+      li.innerHTML=`<span class="font-medium">${i+1}. ${d.name}</span><button class="rm-btn text-red-600 hover:text-red-800 font-bold">×</button>`;
+      li.querySelector('button').addEventListener('click',()=>removeDestination(d.name));
+      selectEl.appendChild(li);
+    });
+  }
+
+  // ===== GENERATE ROUTE =====
+  function generateRoute(){
+    if(!startMarker){ alert('Silakan tentukan titik awal di peta.'); return; }
+    const { lat:startLat, lng:startLng } = startMarker.getLatLng();
+    // urutkan destinasi berdasarkan jarak incremental sederhana (Nearest Neighbour)
+    const route=[...selected];
+    const ordered=[];
+    let currLat=startLat, currLng=startLng;
+    while(route.length){
+      let minIdx=0, minDist=Infinity;
+      route.forEach((d,i)=>{
+        const dist=haversine(currLat,currLng,d.lat,d.lng);
+        if(dist<minDist){minDist=dist;minIdx=i;}
       });
-      
-      // Add markers for each waypoint
-      waypoints.forEach((wp, i) => {
-        L.marker([wp[0], wp[1]]).addTo(map)
-          .bindPopup(`Titik ${i + 1}`)
-          .openPopup();
-      });
-      
-      // Add polyline connecting waypoints
-      if (waypoints.length > 1) {
-        L.polyline(waypoints, {color: '#f59e0b'}).addTo(map);
-      }
-      
-      // Fit map to bounds of all waypoints
-      const bounds = L.latLngBounds(waypoints);
-      map.fitBounds(bounds, {padding: [50, 50]});
+      const next=route.splice(minIdx,1)[0];
+      ordered.push(next);
+      currLat=next.lat; currLng=next.lng;
     }
+    // buat polyline
+    if(routeLine) map.removeLayer(routeLine);
+    const latlngs=[[startLat,startLng], ...ordered.map(d=>[d.lat,d.lng])];
+    routeLine=L.polyline(latlngs,{weight:5,color:'#eab308'}).addTo(map);
+    map.fitBounds(latlngs,{padding:[40,40]});
+  }
 
-    // Filter routes
-    document.getElementById('duration').addEventListener('change', filterRoutes);
-    document.getElementById('type').addEventListener('change', filterRoutes);
-    document.getElementById('activity').addEventListener('change', filterRoutes);
+  genBtn.addEventListener('click',generateRoute);
 
-    function filterRoutes() {
-      const duration = document.getElementById('duration').value;
-      const type = document.getElementById('type').value;
-      const activity = document.getElementById('activity').value;
-      
-      // In a real implementation, you would filter the displayed routes here
-      console.log(`Filtering by: Duration=${duration}, Type=${type}, Activity=${activity}`);
-      // For now, we'll just show all routes
-    }
+  // ===== CLICK MAP UNTUK START POINT =====
+  map.on('click',e=>{
+    const {lat,lng}=e.latlng;
+    if(startMarker) startMarker.setLatLng([lat,lng]);
+    else startMarker=L.marker([lat,lng],{draggable:true}).addTo(map).bindPopup('<strong>Lokasi Anda</strong>').openPopup();
+  });
+
+  // ===== AUTO GEOLOCATION =====
+  if(navigator.geolocation){
+    navigator.geolocation.getCurrentPosition(pos=>{
+      const {latitude,longitude}=pos.coords;
+      map.setView([latitude,longitude],11);
+      map.fire('click',{latlng:{lat:latitude,lng:longitude}});
+    });
+  }
+
+  // ===== MOBILE MENU FUNCTIONALITY =====
+  function openMenu() {
+    document.getElementById('mobileMenu').classList.add('show');
+    document.getElementById('overlay').style.display = 'block';
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeMenu() {
+    document.getElementById('mobileMenu').classList.remove('show');
+    document.getElementById('overlay').style.display = 'none';
+    document.body.style.overflow = '';
+  }
+
+  // Event Listeners for Menu
+  document.getElementById('openMenu').addEventListener('click', openMenu);
+  document.getElementById('closeMenu').addEventListener('click', closeMenu);
+  document.getElementById('overlay').addEventListener('click', closeMenu);
+
+  // Close menu when clicking on navigation links
+  document.querySelectorAll('#mobileMenu a').forEach(link => {
+    link.addEventListener('click', closeMenu);
+  });
   </script>
 </body>
 </html>

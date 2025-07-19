@@ -112,10 +112,10 @@ while ($row = $query->fetch_assoc()) {
 <body class="min-h-screen flex flex-col">
 
   <!-- Header with Mobile Menu -->
-  <header class="header-gradient text-white p-4 shadow-lg relative">
+  <header class="header-gradient text-white p-4 shadow-md flex items-center justify-between relative">
     <div class="batik-pattern"></div>
     <div class="container mx-auto flex items-center justify-between relative z-10">
-      <a href="index.php" class="back-link text-lg font-semibold flex items-center gap-2 hover:text-amber-100">
+      <a href="index.php" class="text-lg font-bold flex items-center gap-2 hover:text-amber-200 absolute left-4 top-1/2 -translate-y-1/2">
         <span class="text-2xl leading-none">←</span>
         <span class="hidden sm:inline">Kembali</span>
       </a>
@@ -135,7 +135,7 @@ while ($row = $query->fetch_assoc()) {
       <li><a href="umkm.php" class="menu-item block hover:text-amber-700">UMKM Lokal</a></li>
       <li><a href="suara.php" class="menu-item block hover:text-amber-700">Suara Lokal</a></li>
       <li><a href="rute.php" class="menu-item block hover:text-amber-700">Rekomendasi Wisata</a></li>
-      <li><a href="booking.php" class="menu-item block hover:text-amber-700">Tour & Wisata</a></li>
+      <li><a href="pesan.php" class="menu-item block hover:text-amber-700">Tour & Wisata</a></li>
       <li class="pt-6 mt-6 border-t border-amber-200">
         <span class="text-sm text-gray-500 block mb-2">Logged in as: <span class="font-medium text-gray-700"><?php echo htmlspecialchars($user['username']); ?></span></span>
         <a href="logout.php" class="menu-item block text-red-600 hover:text-red-800 font-medium">Logout</a>
@@ -213,8 +213,9 @@ while ($row = $query->fetch_assoc()) {
       // Jika ada data dari database, gunakan itu
       if (!empty($cultural_data)) {
           foreach ($cultural_data as $slug => $item) {
+              $target_page = $slug . '.php';
               echo '
-              <a href="detail-budaya.php?slug='.$slug.'" class="group no-underline">
+              <a href="'.$target_page.'" class="group no-underline">
                   <article class="card bg-white p-6 hover:shadow-xl">
                       <h3 class="text-xl font-bold mb-3 text-amber-900 group-hover:text-amber-700 transition-colors">'.$item['title'].'</h3>
                       <ul class="list-disc pl-5 text-gray-700 space-y-2">';
@@ -228,8 +229,9 @@ while ($row = $query->fetch_assoc()) {
       } else {
           // Fallback ke data sampel jika tidak ada database
           foreach ($cultural_items as $item) {
+              $target_page = $item['slug'] . '.php';
               echo '
-              <a href="detail-budaya.php?slug='.$item['slug'].'" class="group no-underline">
+              <a href="'.$target_page.'" class="group no-underline">
                   <article class="card bg-white p-6 hover:shadow-xl">
                       <h3 class="text-xl font-bold mb-3 text-amber-900 group-hover:text-amber-700 transition-colors">'.$item['title'].'</h3>
                       <ul class="list-disc pl-5 text-gray-700 space-y-2">';

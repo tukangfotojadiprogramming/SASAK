@@ -82,7 +82,7 @@ $user = $user_result->fetch_assoc();
       <li><a href="umkm.php" class="block hover:text-amber-600">UMKM Lokal</a></li>
       <li><a href="suara.php" class="block hover:text-amber-600">Suara Lokal</a></li>
       <li><a href="rute.php" class="block hover:text-amber-600">Rekomendasi Wisata</a></li>
-      <li><a href="booking.php" class="block hover:text-amber-600">Tour & Wisata</a></li>
+      <li><a href="pesan.php" class="block hover:text-amber-600">Tour & Wisata</a></li>
       <li class="pt-4 border-t">
         <span class="text-gray-500">Logged in as: <?php echo htmlspecialchars($user['username']); ?></span>
       </li>
@@ -136,10 +136,10 @@ $user = $user_result->fetch_assoc();
   <section class="px-6 mt-6 mb-24">
     <h2 class="text-lg font-bold text-amber-900 mb-4">Akses Cepat</h2>
     <div class="grid grid-cols-2 md:grid-cols-3 gap-4">
-      <a href="booking.php" class="bg-white p-4 rounded-lg shadow flex items-center justify-center text-center hover:bg-amber-50 transition-colors">
+      <a href="pesan.php" class="bg-white p-4 rounded-lg shadow flex items-center justify-center text-center hover:bg-amber-50 transition-colors">
         <div>
           <div class="text-2xl mb-2">🚌</div>
-          <span>Booking Travel</span>
+          <span>Pesan Travel</span>
         </div>
       </a>
       
@@ -174,7 +174,7 @@ $user = $user_result->fetch_assoc();
       <a href="sasakwisata.php" class="bg-white p-4 rounded-lg shadow flex items-center justify-center text-center hover:bg-amber-50 transition-colors">
         <div>
           <div class="text-2xl mb-2">🏝️</div>
-          <span>Wisata Sasak</span>
+          <span>Sasak Wisata </span>
         </div>
       </a>
     </div>
@@ -195,9 +195,8 @@ $user = $user_result->fetch_assoc();
     </div>
   </section>
 
-  <!-- Footer -->
-  <footer class="fixed bottom-0 left-0 right-0 bg-amber-900 text-white text-sm text-center py-3">
-    <p>&copy; 2025 BALEQARA | Tim Pengembang</p>
+  <footer class="bg-amber-900 text-white text-sm text-center py-3">
+    <p>&copy; 2025 BALEQARA | Dilestarikan dengan cinta budaya.</p>
   </footer>
 
   <script>
